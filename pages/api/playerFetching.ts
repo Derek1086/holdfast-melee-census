@@ -1,4 +1,4 @@
-// lib/dataFetching.ts
+// pages/api/playerFetching.ts
 import { MongoClient, WithId, Document } from "mongodb";
 import clientPromise from "../../lib/mongodb";
 
@@ -26,9 +26,7 @@ export const fetchPlayersData = async (): Promise<RegionData[]> => {
   const naRegionData: WithId<Document>[] = await db
     .collection("NAREGION")
     .find({})
-    .sort({
-      /* Specify your sorting criteria here */
-    })
+    .sort({})
     .limit(10)
     .toArray();
 
@@ -36,9 +34,7 @@ export const fetchPlayersData = async (): Promise<RegionData[]> => {
   const euRegionData: WithId<Document>[] = await db
     .collection("EUREGION")
     .find({})
-    .sort({
-      /* Specify your sorting criteria here */
-    })
+    .sort({})
     .limit(10)
     .toArray();
 
