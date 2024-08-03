@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Inter } from "next/font/google";
 import client from "@/lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import NavBar from "@/components/NavBar/NavBar";
@@ -8,8 +5,6 @@ import NavBar from "@/components/NavBar/NavBar";
 type ConnectionStatus = {
   isConnected: boolean;
 };
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const getServerSideProps: GetServerSideProps<
   ConnectionStatus
@@ -34,7 +29,7 @@ export default function Home({
     <>
       <NavBar />
       <main
-        className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+        className={`flex min-h-screen flex-col items-center justify-between p-24`}
       >
         <div className="flex flex-col place-items-center gap-12">
           {isConnected ? (
