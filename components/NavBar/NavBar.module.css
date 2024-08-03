@@ -1,0 +1,32 @@
+.logo {
+  width: 30%;
+}
+
+.search {
+  width: 40%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.actions {
+  width: 30%;
+  display: flex;
+  align-content: flex-end;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+  .logo,
+  .region {
+    display: none;
+  }
+
+  .search {
+    width: 80%;
+  }
+
+  .actions {
+    width: 20%;
+  }
+}
