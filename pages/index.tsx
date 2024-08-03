@@ -1,6 +1,7 @@
 import clientPromise from "../lib/mongodb";
 import { Player, RegionData } from "./api/playerFetching";
 import NavBar from "../components/NavBar";
+import HomeLoader from "../components/loaders/HomeLoader";
 import { GetStaticProps } from "next";
 import { useState, useEffect } from "react";
 
@@ -61,6 +62,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 const Home: React.FC<Props> = ({ players }) => {
+  const [loading, setLoading] = useState(true);
   const [region, setRegion] = useState<string>("NA");
   const [location, setLocation] = useState<string>("");
   const [viewingPlayer, setViewingPlayer] = useState<string>("");
@@ -89,6 +91,7 @@ const Home: React.FC<Props> = ({ players }) => {
       setSearchedPlayers(initialSearchedPlayers);
       // console.log(initialSearchedPlayers);
     }
+    setLoading(false);
   }, [regionalPlayers, setSearchedPlayers]);
 
   const searchHandler = (text: string) => {
@@ -129,6 +132,8 @@ const Home: React.FC<Props> = ({ players }) => {
           </h2>
         )}
       </div> */}
+
+      {loading ? <HomeLoader /> : <HomeLoader />}
     </>
   );
 };
