@@ -1,6 +1,6 @@
 import clientPromise from "../lib/mongodb";
 import { Player, RegionData } from "./api/playerFetching";
-import NavBar from "../components/navbar/NavBar";
+import NavBar from "../components/NavBar";
 import { GetStaticProps } from "next";
 import { useState, useEffect } from "react";
 

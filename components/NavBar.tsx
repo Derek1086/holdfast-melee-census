@@ -11,7 +11,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/router";
-import { Player } from "../../pages/api/playerFetching";
+import { Player } from "../pages/api/playerFetching";
 
 import classes from "./NavBar.module.css";
 
