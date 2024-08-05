@@ -91,7 +91,10 @@ const NavBar: React.FC<NavBarProps> = ({
                   if (typeof option === "string") {
                     return option;
                   }
-                  return option.name;
+                  const playerName = option.regiment
+                    ? option.regiment + " " + option.name
+                    : option.name;
+                  return playerName;
                 }}
                 renderInput={(params) => (
                   <TextField
