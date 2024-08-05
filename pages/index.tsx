@@ -82,7 +82,6 @@ const Home: React.FC<Props> = ({ players }) => {
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
     setLocation("");
-    setViewingPlayer(null);
     setFilteredPlayers("");
   };
 
@@ -240,7 +239,6 @@ const Home: React.FC<Props> = ({ players }) => {
   ) => {
     const target = event.target as SVGPathElement;
     setLocation(target.id);
-    setViewingPlayer(null);
     setFilteredPlayers("");
   };
 
