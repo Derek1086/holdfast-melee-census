@@ -6,6 +6,7 @@ import MapActions from "../components/home/maps/MapActions";
 import ListRenderer from "../components/home/details/ListRenderer";
 import NAMap from "../components/home/maps/NAMap";
 import EUMap from "../components/home/maps/EUMap";
+import PlayerBio from "../components/home/details/player/PlayerBio";
 import { GetStaticProps } from "next";
 import { useState, useEffect } from "react";
 
@@ -70,7 +71,7 @@ const Home: React.FC<Props> = ({ players }) => {
   const [region, setRegion] = useState<string>("NA");
   const [location, setLocation] = useState<string>("");
   const [playersInLocation, setPlayersInLocation] = useState<Player[]>([]);
-  const [viewingPlayer, setViewingPlayer] = useState<string>("");
+  const [viewingPlayer, setViewingPlayer] = useState<Player | null>(null);
   const [filteredPlayers, setFilteredPlayers] = useState<string>("");
   const [searchedPlayers, setSearchedPlayers] = useState<Player[] | null>(null);
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -81,7 +82,7 @@ const Home: React.FC<Props> = ({ players }) => {
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
     setLocation("");
-    setViewingPlayer("");
+    setViewingPlayer(null);
     setFilteredPlayers("");
   };
 
@@ -239,17 +240,21 @@ const Home: React.FC<Props> = ({ players }) => {
   ) => {
     const target = event.target as SVGPathElement;
     setLocation(target.id);
-    setViewingPlayer("");
+    setViewingPlayer(null);
     setFilteredPlayers("");
   };
 
   return (
     <>
+      <PlayerBio
+        viewingPlayer={viewingPlayer}
+        setViewingPlayer={setViewingPlayer}
+        region={region}
+      />
       <NavBar
         region={region}
         updateRegionHandler={updateRegionHandler}
         setLocation={setLocation}
-        setViewingPlayer={setViewingPlayer}
         filteredPlayers={filteredPlayers}
         setFilteredPlayers={setFilteredPlayers}
         searchHandler={searchHandler}
@@ -300,6 +305,7 @@ const Home: React.FC<Props> = ({ players }) => {
               location={location}
               searchedPlayers={searchedPlayers}
               playersInLocation={playersInLocation}
+              setViewingPlayer={setViewingPlayer}
             />
           </div>
         </div>

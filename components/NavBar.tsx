@@ -19,7 +19,6 @@ interface NavBarProps {
   region: string;
   updateRegionHandler: () => void;
   setLocation: (newLocation: string) => void;
-  setViewingPlayer: (id: string) => void;
   filteredPlayers: string;
   setFilteredPlayers: (id: string) => void;
   searchHandler: (input: string) => void;
@@ -30,7 +29,6 @@ const NavBar: React.FC<NavBarProps> = ({
   region,
   updateRegionHandler,
   setLocation,
-  setViewingPlayer,
   filteredPlayers,
   setFilteredPlayers,
   searchHandler,
@@ -39,7 +37,6 @@ const NavBar: React.FC<NavBarProps> = ({
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredPlayers(event.target.value);
     setLocation("");
-    setViewingPlayer("");
     searchHandler(event.target.value);
   };
 

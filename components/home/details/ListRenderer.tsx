@@ -13,6 +13,7 @@ interface ListRendererProps {
   location: string;
   searchedPlayers: Player[] | null;
   playersInLocation: Player[] | null;
+  setViewingPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
 }
 
 const ListRenderer: React.FC<ListRendererProps> = ({
@@ -20,6 +21,7 @@ const ListRenderer: React.FC<ListRendererProps> = ({
   location,
   searchedPlayers,
   playersInLocation,
+  setViewingPlayer,
 }) => {
   const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
 
@@ -95,7 +97,10 @@ const ListRenderer: React.FC<ListRendererProps> = ({
             Average Impact Rating: 0
           </Typography>
         )}
-        <PlayerList players={sortedPlayers} />
+        <PlayerList
+          players={sortedPlayers}
+          setViewingPlayer={setViewingPlayer}
+        />
       </Card>
     </div>
   );

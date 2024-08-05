@@ -1,4 +1,3 @@
-import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -10,9 +9,13 @@ import Image from "next/image";
 
 interface PlayerItemProps {
   player: Player | null;
+  setViewingPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
 }
 
-const PlayerItem: React.FC<PlayerItemProps> = ({ player }) => {
+const PlayerItem: React.FC<PlayerItemProps> = ({
+  player,
+  setViewingPlayer,
+}) => {
   if (!player) {
     return (
       <Typography
@@ -34,22 +37,20 @@ const PlayerItem: React.FC<PlayerItemProps> = ({ player }) => {
     : player.state;
 
   return (
-    <ListItem>
-      <ListItemButton>
-        <ListItemAvatar>
-          <Avatar>
-            <Image
-              src={findIcon(player.name)}
-              alt="img"
-              height={50}
-              width={50}
-              unoptimized
-            />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={playerName} secondary={playerLocation} />
-      </ListItemButton>
-    </ListItem>
+    <ListItemButton onClick={() => setViewingPlayer(player)}>
+      <ListItemAvatar>
+        <Avatar sx={{ background: "transparent" }}>
+          <Image
+            src={findIcon(player.name)}
+            alt={player.name}
+            height={50}
+            width={50}
+            unoptimized
+          />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary={playerName} secondary={playerLocation} />
+    </ListItemButton>
   );
 };
 
