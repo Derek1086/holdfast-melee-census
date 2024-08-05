@@ -153,24 +153,39 @@ const Home: React.FC<Props> = ({ players }) => {
   };
 
   const mouseDownHandler = (
-    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGSVGElement, MouseEvent>
+      | React.TouchEvent<SVGSVGElement>
   ) => {
     setIsDragging(true);
-    setDragStart({ x: event.clientX, y: event.clientY });
+    if ("clientX" in event) {
+      setDragStart({ x: event.clientX, y: event.clientY });
+    } else {
+      setDragStart({
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      });
+    }
   };
 
   const mouseMoveHandler = (
-    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGSVGElement, MouseEvent>
+      | React.TouchEvent<SVGSVGElement>
   ) => {
     if (!isDragging) {
       return;
     }
-    const xOffset = event.clientX - dragStart.x;
-    const yOffset = event.clientY - dragStart.y;
+    let xOffset, yOffset;
+    if ("clientX" in event) {
+      xOffset = event.clientX - dragStart.x;
+      yOffset = event.clientY - dragStart.y;
+    } else {
+      xOffset = event.touches[0].clientX - dragStart.x;
+      yOffset = event.touches[0].clientY - dragStart.y;
+    }
     setOffset({ x: offset.x + xOffset, y: offset.y + yOffset });
-    setDragStart({ x: event.clientX, y: event.clientY });
-    // console.log(offset.x + xOffset);
-    // console.log(offset.y + yOffset);
+    setDragStart({ x: dragStart.x + xOffset, y: dragStart.y + yOffset });
   };
 
   const mouseUpHandler = () => {
@@ -182,7 +197,9 @@ const Home: React.FC<Props> = ({ players }) => {
   };
 
   const mouseEnterHandler = (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => {
     const target = event.target as SVGPathElement;
     target.style.transition = "fill 0.5s, color 0.3s";
@@ -228,7 +245,9 @@ const Home: React.FC<Props> = ({ players }) => {
   };
 
   const mouseLeaveHandler = (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => {
     const target = event.target as SVGPathElement;
     target.style.transition = "fill 0.5s, color 0.3s";
@@ -237,7 +256,9 @@ const Home: React.FC<Props> = ({ players }) => {
   };
 
   const locationSelectHandler = (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => {
     const target = event.target as SVGPathElement;
     setLocation(target.id);

@@ -5,22 +5,32 @@ interface EUMapProps {
   zoomLevel: number;
   offset: { x: number; y: number };
   mouseDownHandler: (
-    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGSVGElement, MouseEvent>
+      | React.TouchEvent<SVGSVGElement>
   ) => void;
   mouseMoveHandler: (
-    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGSVGElement, MouseEvent>
+      | React.TouchEvent<SVGSVGElement>
   ) => void;
   mouseUpHandler: () => void;
   mouseLeaveBoxHandler: () => void;
   mouseEnterHandler: (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => void;
   mouseLeaveHandler: (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => void;
   updateColorHandler: (path: string) => string;
   locationSelectHandler: (
-    event: React.MouseEvent<SVGPathElement, MouseEvent>
+    event:
+      | React.MouseEvent<SVGPathElement, MouseEvent>
+      | React.TouchEvent<SVGPathElement>
   ) => void;
 }
 
@@ -59,6 +69,9 @@ const EUMap: React.FC<EUMapProps> = ({
         onMouseMove={mouseMoveHandler}
         onMouseUp={mouseUpHandler}
         onMouseLeave={mouseLeaveBoxHandler}
+        onTouchStart={mouseDownHandler}
+        onTouchMove={mouseMoveHandler}
+        onTouchEnd={mouseUpHandler}
         height="100%"
         width="100%"
         xmlns="http://www.w3.org/2000/svg"
