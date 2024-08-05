@@ -1,6 +1,8 @@
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 
+import classes from "./MapActions.module.css";
+
 interface MapActionsProps {
   zoomInHandler: () => void;
   zoomOutHandler: () => void;
@@ -14,7 +16,7 @@ const MapActions: React.FC<MapActionsProps> = ({
 }) => {
   return (
     <div className="flex">
-      <div className="flex gap-4 w-1/2 items-center">
+      <div className={`flex gap-4 items-center ${classes.actions}`}>
         <Button
           variant="text"
           color="secondary"
@@ -40,7 +42,7 @@ const MapActions: React.FC<MapActionsProps> = ({
           Reset
         </Button>
       </div>
-      <div className="w-1/2">
+      <div className={classes.legend}>
         <Card
           sx={{
             height: "100%",

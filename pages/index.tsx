@@ -10,6 +10,8 @@ import PlayerBio from "../components/home/details/player/PlayerBio";
 import { GetStaticProps } from "next";
 import { useState, useEffect } from "react";
 
+import classes from "../components/home/Home.module.css";
+
 export type Props = {
   players: RegionData[];
 };
@@ -261,8 +263,8 @@ const Home: React.FC<Props> = ({ players }) => {
       {loading ? (
         <HomeLoader />
       ) : (
-        <div className="flex gap-4 p-4">
-          <div className="w-3/5">
+        <div className={classes.container}>
+          <div className={classes.map}>
             <MapActions
               zoomInHandler={zoomInHandler}
               zoomOutHandler={zoomOutHandler}
@@ -297,7 +299,7 @@ const Home: React.FC<Props> = ({ players }) => {
               />
             )}
           </div>
-          <div className="w-2/5 flex flex-col items-center">
+          <div className={`flex flex-col items-center ${classes.details}`}>
             <ListRenderer
               region={region}
               location={location}

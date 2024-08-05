@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+}
+
+.map {
+  width: 60%;
+}
+
+.details {
+  width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    display: block;
+  }
+
+  .map {
+    width: 100%;
+  }
+
+  .details {
+    width: 100%;
+    margin-top: 15px;
+  }
+}

@@ -1,0 +1,17 @@
+.legend {
+  width: 50%;
+}
+
+.actions {
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .legend {
+    display: none;
+  }
+
+  .actions {
+    width: 100%;
+  }
+}
