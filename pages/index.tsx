@@ -169,8 +169,8 @@ const Home: React.FC<Props> = ({ players }) => {
     const yOffset = event.clientY - dragStart.y;
     setOffset({ x: offset.x + xOffset, y: offset.y + yOffset });
     setDragStart({ x: event.clientX, y: event.clientY });
-    console.log(offset.x + xOffset);
-    console.log(offset.y + yOffset);
+    // console.log(offset.x + xOffset);
+    // console.log(offset.y + yOffset);
   };
 
   const mouseUpHandler = () => {

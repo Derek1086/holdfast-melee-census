@@ -46,7 +46,7 @@ const handleUpdatePlayer = async (
 
 async function getSpreadsheetValues(region: string, playerId: string) {
   if (!process.env.NEXT_PUBLIC_GOOGLE_SHEETS_API_KEY) {
-    console.log("no api key");
+    //console.log("no api key");
     return undefined;
   }
   const spreadsheetId = "13U3pfFnv7kvx6j5YdUs7lEu57V07QEPdFeFWjHO79v4";
@@ -66,7 +66,7 @@ async function getSpreadsheetValues(region: string, playerId: string) {
       const values: string[][] = response.data.values;
 
       if (!values || values.length === 0) {
-        console.log("No data found in the spreadsheet.");
+        //console.log("No data found in the spreadsheet.");
         return;
       }
 
@@ -74,7 +74,7 @@ async function getSpreadsheetValues(region: string, playerId: string) {
       const playerIndex: number = headers.indexOf("Player Name");
 
       if (playerIndex === -1) {
-        console.log("Player Name column not found in the spreadsheet.");
+        //console.log("Player Name column not found in the spreadsheet.");
         return;
       }
 
@@ -89,8 +89,8 @@ async function getSpreadsheetValues(region: string, playerId: string) {
           impactRating: plrRow[headers.indexOf("Impact Rating")],
         };
 
-        console.log(`Player data for ${playerId}:`, playerData);
-        console.log(playerId);
+        //console.log(`Player data for ${playerId}:`, playerData);
+        //console.log(playerId);
 
         const samplePlayerId: string = playerId;
         const sampleUpdatedData: UpdatedData = {
@@ -101,12 +101,12 @@ async function getSpreadsheetValues(region: string, playerId: string) {
 
         return playerData.impactRating;
       } else {
-        console.log(`Player named ${playerId} not found in the spreadsheet.`);
+        //console.log(`Player named ${playerId} not found in the spreadsheet.`);
         return undefined;
       }
     }
   } catch (error: any) {
-    console.error("Error fetching spreadsheet values:", error.message);
+    //console.error("Error fetching spreadsheet values:", error.message);
     return undefined;
   }
 }
