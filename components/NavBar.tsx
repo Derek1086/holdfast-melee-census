@@ -46,8 +46,8 @@ const NavBar: React.FC<NavBarProps> = ({
   const router = useRouter();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box>
+      <AppBar position="static" sx={{ width: "100%" }}>
         <Toolbar sx={{ padding: "15px" }}>
           <Box className={classes.logo}>
             <Typography
@@ -147,9 +147,10 @@ const NavBar: React.FC<NavBarProps> = ({
                 REGION
               </Typography>
               <Button
-                variant="contained"
+                variant="text"
                 color="secondary"
                 onClick={updateRegionHandler}
+                size="large"
               >
                 {region}
               </Button>

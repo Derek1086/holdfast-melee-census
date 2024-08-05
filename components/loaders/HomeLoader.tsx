@@ -30,13 +30,9 @@ const HomeLoader = () => {
           <Skeleton variant="rounded" height={500} width={"100%"} />
         </div>
       </div>
-      <div className="w-2/5">
-        <Skeleton
-          variant="rounded"
-          height={550}
-          width={"100%"}
-          className="mt-3"
-        />
+      <div className="w-2/5 flex flex-col items-center">
+        <Skeleton variant="text" sx={{ fontSize: "40px" }} width={"50%"} />
+        <Skeleton variant="rounded" height={500} width={"100%"} />
       </div>
     </div>
   );
