@@ -156,6 +156,7 @@ import ytug from "../../../../bioImages/ytug.png";
 import Zahar from "../../../../bioImages/Zahar.png";
 import Zakk from "../../../../bioImages/Zakk.png";
 
+// find img profile based on names
 export default function findIcon(name: string) {
   switch (name) {
     case "7nation":
