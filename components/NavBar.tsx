@@ -6,11 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import IconButton from "@mui/material/IconButton";
-import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
-import { useRouter } from "next/router";
 import { Player } from "../pages/api/playerFetching";
 
 import classes from "./NavBar.module.css";
@@ -40,8 +36,6 @@ const NavBar: React.FC<NavBarProps> = ({
     searchHandler(event.target.value);
   };
 
-  const router = useRouter();
-
   return (
     <Box>
       <AppBar position="static" sx={{ width: "100%" }}>
@@ -69,16 +63,6 @@ const NavBar: React.FC<NavBarProps> = ({
                 e.preventDefault();
               }}
             >
-              <IconButton
-                sx={{ p: "10px" }}
-                aria-label="home"
-                onClick={() => {
-                  router.push("/");
-                }}
-              >
-                <HomeIcon />
-              </IconButton>
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
               <Autocomplete
                 freeSolo
                 sx={{ ml: 1, flex: 1 }}
