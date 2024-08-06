@@ -24,6 +24,7 @@ const ListRenderer: React.FC<ListRendererProps> = ({
   setViewingPlayer,
 }) => {
   const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
+  const router = useRouter();
 
   const getAverageRating = () => {
     if (!sortedPlayers || sortedPlayers.length === 0) {
@@ -50,8 +51,6 @@ const ListRenderer: React.FC<ListRendererProps> = ({
       setSortedPlayers(playersInLocation);
     }
   }, [playersInLocation, searchedPlayers, location]);
-
-  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center w-full">

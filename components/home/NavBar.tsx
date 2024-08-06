@@ -10,8 +10,8 @@ import Paper from "@mui/material/Paper";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
-import findIcon from "./home/details/player/PlayerIcon";
-import { Player } from "../pages/api/playerFetching";
+import findIcon from "../home/details/player/PlayerIcon";
+import { Player } from "../../pages/api/playerFetching";
 import Image from "next/image";
 
 import classes from "./NavBar.module.css";

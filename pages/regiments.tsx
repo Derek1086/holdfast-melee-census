@@ -1,7 +1,18 @@
-import React from "react";
+import ToolBar from "../components/ToolBar";
+import { useState, useEffect } from "react";
 
-const regiments = () => {
-  return <div>regiments</div>;
+const Regiments = () => {
+  const [region, setRegion] = useState<string>("NA");
+
+  const updateRegionHandler = () => {
+    setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
+  };
+
+  return (
+    <>
+      <ToolBar region={region} updateRegionHandler={updateRegionHandler} />
+    </>
+  );
 };
 
-export default regiments;
+export default Regiments;

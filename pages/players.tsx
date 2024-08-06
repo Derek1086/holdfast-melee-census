@@ -9,6 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import ToolBar from "../components/ToolBar";
 
 type PlayersProps = {
   players: RegionData[];
@@ -16,6 +17,11 @@ type PlayersProps = {
 
 const Players: React.FC<PlayersProps> = ({ players }) => {
   const [loading, setLoading] = useState(true);
+  const [region, setRegion] = useState<string>("NA");
+
+  const updateRegionHandler = () => {
+    setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
+  };
 
   useEffect(() => {
     setLoading(false);
@@ -26,79 +32,85 @@ const Players: React.FC<PlayersProps> = ({ players }) => {
   const euPlayers = players.find((region) => region.Region === "EU");
 
   return (
-    <div style={{ color: "white", padding: "20px" }}>
-      {loading ? (
-        <PlayersLoader />
-      ) : (
-        <>
-          {/* NA Players Table */}
-          {naPlayers && (
-            <TableContainer component={Paper} style={{ marginBottom: "20px" }}>
-              <h1 style={{ padding: "15px" }}>NA Players</h1>
-              <Table sx={{ minWidth: 650 }} aria-label="NA players table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="left">Regiment</TableCell>
-                    <TableCell align="left">City</TableCell>
-                    <TableCell align="left">State</TableCell>
-                    <TableCell align="left">Rating</TableCell>
-                    <TableCell align="left">Bio</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {naPlayers.players.map((player) => (
-                    <TableRow key={player.id}>
-                      <TableCell component="th" scope="row">
-                        {player.name}
-                      </TableCell>
-                      <TableCell align="left">{player.regiment}</TableCell>
-                      <TableCell align="left">{player.city}</TableCell>
-                      <TableCell align="left">{player.state}</TableCell>
-                      <TableCell align="left">{player.rating}</TableCell>
-                      <TableCell align="left">{player.bio}</TableCell>
+    <>
+      <ToolBar region={region} updateRegionHandler={updateRegionHandler} />
+      <div style={{ color: "white", padding: "20px" }}>
+        {loading ? (
+          <PlayersLoader />
+        ) : (
+          <>
+            {/* NA Players Table */}
+            {naPlayers && region === "NA" && (
+              <TableContainer
+                component={Paper}
+                style={{ marginBottom: "20px" }}
+              >
+                <h1 style={{ padding: "15px" }}>NA Players</h1>
+                <Table sx={{ minWidth: 650 }} aria-label="NA players table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="left">Regiment</TableCell>
+                      <TableCell align="left">City</TableCell>
+                      <TableCell align="left">State</TableCell>
+                      <TableCell align="left">Rating</TableCell>
+                      <TableCell align="left">Bio</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
+                  </TableHead>
+                  <TableBody>
+                    {naPlayers.players.map((player) => (
+                      <TableRow key={player.id}>
+                        <TableCell component="th" scope="row">
+                          {player.name}
+                        </TableCell>
+                        <TableCell align="left">{player.regiment}</TableCell>
+                        <TableCell align="left">{player.city}</TableCell>
+                        <TableCell align="left">{player.state}</TableCell>
+                        <TableCell align="left">{player.rating}</TableCell>
+                        <TableCell align="left">{player.bio}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
 
-          {/* EU Players Table */}
-          {euPlayers && (
-            <TableContainer component={Paper}>
-              <h1 style={{ padding: "15px" }}>EU Players</h1>
-              <Table sx={{ minWidth: 650 }} aria-label="EU players table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="left">Regiment</TableCell>
-                    <TableCell align="left">City</TableCell>
-                    <TableCell align="left">Country</TableCell>
-                    <TableCell align="left">Rating</TableCell>
-                    <TableCell align="left">Bio</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {euPlayers.players.map((player) => (
-                    <TableRow key={player.id}>
-                      <TableCell component="th" scope="row">
-                        {player.name}
-                      </TableCell>
-                      <TableCell align="left">{player.regiment}</TableCell>
-                      <TableCell align="left">{player.city}</TableCell>
-                      <TableCell align="left">{player.state}</TableCell>
-                      <TableCell align="left">{player.rating}</TableCell>
-                      <TableCell align="left">{player.bio}</TableCell>
+            {/* EU Players Table */}
+            {euPlayers && region === "EU" && (
+              <TableContainer component={Paper}>
+                <h1 style={{ padding: "15px" }}>EU Players</h1>
+                <Table sx={{ minWidth: 650 }} aria-label="EU players table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="left">Regiment</TableCell>
+                      <TableCell align="left">City</TableCell>
+                      <TableCell align="left">Country</TableCell>
+                      <TableCell align="left">Rating</TableCell>
+                      <TableCell align="left">Bio</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-        </>
-      )}
-    </div>
+                  </TableHead>
+                  <TableBody>
+                    {euPlayers.players.map((player) => (
+                      <TableRow key={player.id}>
+                        <TableCell component="th" scope="row">
+                          {player.name}
+                        </TableCell>
+                        <TableCell align="left">{player.regiment}</TableCell>
+                        <TableCell align="left">{player.city}</TableCell>
+                        <TableCell align="left">{player.state}</TableCell>
+                        <TableCell align="left">{player.rating}</TableCell>
+                        <TableCell align="left">{player.bio}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

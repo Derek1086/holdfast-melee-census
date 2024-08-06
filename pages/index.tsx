@@ -1,6 +1,6 @@
 import clientPromise from "../lib/mongodb";
 import { Player, RegionData } from "./api/playerFetching";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/home/NavBar";
 import HomeLoader from "../components/loaders/HomeLoader";
 import MapActions from "../components/home/maps/MapActions";
 import ListRenderer from "../components/home/details/ListRenderer";
