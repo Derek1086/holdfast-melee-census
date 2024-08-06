@@ -82,6 +82,8 @@ import Jerry from "../../../../bioImages/Jerry.png";
 import Jewourgie from "../../../../bioImages/Jewourgie.png";
 import Josh from "../../../../bioImages/Josh.png";
 import JulianVHipper from "../../../../bioImages/JulianVHipper.png";
+import juluka from "../../../../bioImages/juluka.png";
+import lobb from "../../../../bioImages/lobb.png";
 import JUUL from "../../../../bioImages/Juul.png";
 import kaczuszka from "../../../../bioImages/kaczuszka.png";
 import Kalani from "../../../../bioImages/Kalani.png";
@@ -329,6 +331,10 @@ export default function findIcon(name: string) {
       return JulianVHipper;
     case "JUUL":
       return JUUL;
+    case "juluka":
+      return juluka;
+    case "lobb":
+      return lobb;
     case "kaczuszka":
       return kaczuszka;
     case "Kalani":
