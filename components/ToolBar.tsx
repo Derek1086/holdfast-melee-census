@@ -1,4 +1,3 @@
-"use client";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,7 +16,7 @@ const ToolBar: React.FC<ToolBarProps> = ({ region, updateRegionHandler }) => {
 
   return (
     <Box>
-      <AppBar position="static" sx={{ width: "100%" }}>
+      <AppBar position="fixed" sx={{ width: "100%", zIndex: 1100 }}>
         <Toolbar sx={{ padding: "15px" }}>
           <Box sx={{ width: "50%" }}>
             <Button

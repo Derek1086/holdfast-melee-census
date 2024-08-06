@@ -2,14 +2,9 @@ import { GetServerSideProps } from "next";
 import { fetchPlayersData, RegionData } from "./api/playerFetching";
 import PlayersLoader from "../components/loaders/PlayersLoader";
 import { useState, useEffect } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import ToolBar from "../components/ToolBar";
+import Head from "next/head";
+import PlayerTable from "../components/players/PlayerTable";
 
 type PlayersProps = {
   players: RegionData[];
@@ -33,79 +28,18 @@ const Players: React.FC<PlayersProps> = ({ players }) => {
 
   return (
     <>
+      <Head>
+        <title>Holdfast Players</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <ToolBar region={region} updateRegionHandler={updateRegionHandler} />
-      <div style={{ color: "white", padding: "20px" }}>
+      <div style={{ color: "white", padding: "20px", marginTop: "70px" }}>
         {loading ? (
           <PlayersLoader />
         ) : (
           <>
-            {/* NA Players Table */}
-            {naPlayers && region === "NA" && (
-              <TableContainer
-                component={Paper}
-                style={{ marginBottom: "20px" }}
-              >
-                <h1 style={{ padding: "15px" }}>NA Players</h1>
-                <Table sx={{ minWidth: 650 }} aria-label="NA players table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell align="left">Regiment</TableCell>
-                      <TableCell align="left">City</TableCell>
-                      <TableCell align="left">State</TableCell>
-                      <TableCell align="left">Rating</TableCell>
-                      <TableCell align="left">Bio</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {naPlayers.players.map((player) => (
-                      <TableRow key={player.id}>
-                        <TableCell component="th" scope="row">
-                          {player.name}
-                        </TableCell>
-                        <TableCell align="left">{player.regiment}</TableCell>
-                        <TableCell align="left">{player.city}</TableCell>
-                        <TableCell align="left">{player.state}</TableCell>
-                        <TableCell align="left">{player.rating}</TableCell>
-                        <TableCell align="left">{player.bio}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-
-            {/* EU Players Table */}
-            {euPlayers && region === "EU" && (
-              <TableContainer component={Paper}>
-                <h1 style={{ padding: "15px" }}>EU Players</h1>
-                <Table sx={{ minWidth: 650 }} aria-label="EU players table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell align="left">Regiment</TableCell>
-                      <TableCell align="left">City</TableCell>
-                      <TableCell align="left">Country</TableCell>
-                      <TableCell align="left">Rating</TableCell>
-                      <TableCell align="left">Bio</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {euPlayers.players.map((player) => (
-                      <TableRow key={player.id}>
-                        <TableCell component="th" scope="row">
-                          {player.name}
-                        </TableCell>
-                        <TableCell align="left">{player.regiment}</TableCell>
-                        <TableCell align="left">{player.city}</TableCell>
-                        <TableCell align="left">{player.state}</TableCell>
-                        <TableCell align="left">{player.rating}</TableCell>
-                        <TableCell align="left">{player.bio}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+            {naPlayers && euPlayers && (
+              <PlayerTable regionalPlayers={players} region={region} />
             )}
           </>
         )}

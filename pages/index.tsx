@@ -9,6 +9,7 @@ import EUMap from "../components/home/maps/EUMap";
 import PlayerBio from "../components/home/details/player/PlayerBio";
 import { GetStaticProps } from "next";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 
 import classes from "../components/home/Home.module.css";
 
@@ -267,6 +268,10 @@ const Home: React.FC<Props> = ({ players }) => {
 
   return (
     <>
+      <Head>
+        <title>Holdfast Melee Census</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <PlayerBio
         viewingPlayer={viewingPlayer}
         setViewingPlayer={setViewingPlayer}
