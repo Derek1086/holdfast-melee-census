@@ -35,9 +35,7 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
           }}
         />
       </Card>
-      <div style={{ height: "480px" }}>
-        {expanded && <RegimentList region={region} setRegiment={setRegiment} />}
-      </div>
+      {expanded && <RegimentList region={region} setRegiment={setRegiment} />}
     </div>
   );
 };

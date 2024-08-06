@@ -35,72 +35,72 @@ interface RegimentIconProps {
   width: number;
 }
 
+export const findRegimentIcon = (regiment: string) => {
+  switch (regiment) {
+    case "2.BIR":
+      return _2bir;
+    case "2.PIR":
+      return _2pir;
+    case "3. Dywizja":
+      return _3dwi;
+    case "3eme":
+      return _3eme;
+    case "7.Fuß":
+      return _7fub;
+    case "15pp":
+      return _15pp;
+    case "25RI":
+      return _25ri;
+    case "26th":
+      return _26th;
+    case "33rd":
+      return _33rd;
+    case "45e":
+      return _45e;
+    case "45th":
+      return _45th;
+    case "51st":
+      return _51st;
+    case "63e":
+      return _63e;
+    case "77th":
+      return _77th;
+    case "87RRE":
+      return _87rre;
+    case "88th":
+      return _88th;
+    case "Altpr_IR11":
+      return altpr;
+    case "E|B":
+      return eb;
+    case "IR21":
+      return ir21;
+    case "KRA":
+      return kra;
+    case "MANIAKI":
+      return maniaki;
+    case "No. 16":
+      return no16;
+    case "QRR":
+      return qrr;
+    case "S-Bat":
+      return sbat;
+    case "SPACE":
+      return space;
+    case "TRR":
+      return trr;
+    case "TRRB":
+      return trrb;
+    default:
+      return null;
+  }
+};
+
 const RegimentIcon: React.FC<RegimentIconProps> = ({
   regiment,
   height,
   width,
 }) => {
-  const findRegimentIcon = (regiment: string) => {
-    switch (regiment) {
-      case "2.BIR":
-        return _2bir;
-      case "2.PIR":
-        return _2pir;
-      case "3. Dywizja":
-        return _3dwi;
-      case "3eme":
-        return _3eme;
-      case "7.Fuß":
-        return _7fub;
-      case "15pp":
-        return _15pp;
-      case "25RI":
-        return _25ri;
-      case "26th":
-        return _26th;
-      case "33rd":
-        return _33rd;
-      case "45e":
-        return _45e;
-      case "45th":
-        return _45th;
-      case "51st":
-        return _51st;
-      case "63e":
-        return _63e;
-      case "77th":
-        return _77th;
-      case "87RRE":
-        return _87rre;
-      case "88th":
-        return _88th;
-      case "Altpr_IR11":
-        return altpr;
-      case "E|B":
-        return eb;
-      case "IR21":
-        return ir21;
-      case "KRA":
-        return kra;
-      case "MANIAKI":
-        return maniaki;
-      case "No. 16":
-        return no16;
-      case "QRR":
-        return qrr;
-      case "S-Bat":
-        return sbat;
-      case "SPACE":
-        return space;
-      case "TRR":
-        return trr;
-      case "TRRB":
-        return trrb;
-      default:
-        return null;
-    }
-  };
-
   const regimentIcon = findRegimentIcon(regiment);
   if (!regimentIcon) {
     return <></>;

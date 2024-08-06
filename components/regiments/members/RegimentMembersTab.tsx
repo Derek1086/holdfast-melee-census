@@ -42,16 +42,14 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
           }}
         />
       </Card>
-      <div style={{ height: "480px" }}>
-        {expanded && (
-          <MembersList
-            regiment={regiment}
-            players={players}
-            region={region}
-            setNumMembers={setNumMembers}
-          />
-        )}
-      </div>
+      {expanded && (
+        <MembersList
+          regiment={regiment}
+          players={players}
+          region={region}
+          setNumMembers={setNumMembers}
+        />
+      )}
     </div>
   );
 };

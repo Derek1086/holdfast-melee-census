@@ -28,22 +28,24 @@ const RegimentList: React.FC<RegimentListProps> = ({ region, setRegiment }) => {
   }
 
   return (
-    <List
-      sx={{
-        width: "100%",
-        bgcolor: "background.paper",
-        overflow: "auto",
-        maxHeight: "100%",
-        marginTop: "15px",
-      }}
-    >
-      {regiments.map((regiment, index) => (
-        <React.Fragment key={regiment.name}>
-          <RegimentItem regiment={regiment} setRegiment={setRegiment} />
-          {index < regiments.length - 1 && <Divider />}
-        </React.Fragment>
-      ))}
-    </List>
+    <div style={{ height: "480px" }}>
+      <List
+        sx={{
+          width: "100%",
+          bgcolor: "background.paper",
+          overflow: "auto",
+          maxHeight: "100%",
+          marginTop: "15px",
+        }}
+      >
+        {regiments.map((regiment, index) => (
+          <React.Fragment key={index}>
+            <RegimentItem regiment={regiment} setRegiment={setRegiment} />
+            {index < regiments.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </List>
+    </div>
   );
 };
 

@@ -84,22 +84,24 @@ const MembersList: React.FC<MembersListProps> = ({
         setViewingPlayer={setViewingPlayer}
         region={region}
       />
-      <List
-        sx={{
-          width: "100%",
-          bgcolor: "background.paper",
-          overflow: "auto",
-          maxHeight: "100%",
-          marginTop: "15px",
-        }}
-      >
-        {members.map((member, index) => (
-          <React.Fragment key={member.id}>
-            <MemberItem member={member} setViewingPlayer={setViewingPlayer} />
-            {index < members.length - 1 && <Divider />}
-          </React.Fragment>
-        ))}
-      </List>
+      <div style={{ height: "480px" }}>
+        <List
+          sx={{
+            width: "100%",
+            bgcolor: "background.paper",
+            overflow: "auto",
+            maxHeight: "100%",
+            marginTop: "15px",
+          }}
+        >
+          {members.map((member, index) => (
+            <React.Fragment key={member.id}>
+              <MemberItem member={member} setViewingPlayer={setViewingPlayer} />
+              {index < members.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </List>
+      </div>
     </>
   );
 };
