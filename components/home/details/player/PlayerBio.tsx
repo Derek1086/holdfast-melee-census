@@ -7,6 +7,7 @@ import PlayerRating from "./PlayerRating";
 import { Player } from "../../../../pages/api/playerFetching";
 import findIcon from "./PlayerIcon";
 import Image from "next/image";
+import RegimentIcon from "../../../regiments/RegimentIcon";
 
 const style = {
   position: "absolute" as "absolute",
@@ -61,15 +62,22 @@ const PlayerBio: React.FC<PlayerBioProps> = ({
           unoptimized
           style={{ borderRadius: "5px" }}
         />
-        <div className="flex gap-4" style={{ alignItems: "center" }}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={{ marginTop: "15px" }}
-          >
-            {playerName}
-          </Typography>
+        <div className="flex gap-4 items-center">
+          <div className="flex gap-1 items-center">
+            <RegimentIcon
+              regiment={viewingPlayer.regiment}
+              height={30}
+              width={30}
+            />
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ marginTop: "15px" }}
+            >
+              {playerName}
+            </Typography>
+          </div>
           <Typography
             gutterBottom
             variant="subtitle1"

@@ -16,6 +16,11 @@ const Regiments = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToolBar region={region} updateRegionHandler={updateRegionHandler} />
+      <div style={{ padding: "20px", marginTop: "70px" }}>
+        <h1 style={{ fontSize: "30px", paddingBottom: "15px" }}>
+          {region} Regiment Registry
+        </h1>
+      </div>
     </>
   );
 };

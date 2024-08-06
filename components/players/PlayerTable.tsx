@@ -24,37 +24,41 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
   }
 
   return (
-    <TableContainer component={Paper} style={{ marginBottom: "20px" }}>
-      <h1 style={{ padding: "15px" }}>{region} Players</h1>
-      <Table sx={{ minWidth: 650 }} aria-label={`${region} players table`}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="left">Regiment</TableCell>
-            <TableCell align="left">City</TableCell>
-            <TableCell align="left">
-              {region === "NA" ? "State" : "Country"}
-            </TableCell>
-            <TableCell align="left">Impact</TableCell>
-            <TableCell align="left">Bio</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {playersData.players.map((player) => (
-            <TableRow key={player.id}>
-              <TableCell component="th" scope="row">
-                {player.name}
+    <>
+      <h1 style={{ fontSize: "30px", paddingBottom: "15px" }}>
+        {region} Players
+      </h1>
+      <TableContainer component={Paper} style={{ marginBottom: "20px" }}>
+        <Table sx={{ minWidth: 650 }} aria-label={`${region} players table`}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="left">Regiment</TableCell>
+              <TableCell align="left">City</TableCell>
+              <TableCell align="left">
+                {region === "NA" ? "State" : "Country"}
               </TableCell>
-              <TableCell align="left">{player.regiment}</TableCell>
-              <TableCell align="left">{player.city}</TableCell>
-              <TableCell align="left">{player.state}</TableCell>
-              <TableCell align="left">{player.rating}</TableCell>
-              <TableCell align="left">{player.bio}</TableCell>
+              <TableCell align="left">Impact</TableCell>
+              <TableCell align="left">Bio</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {playersData.players.map((player) => (
+              <TableRow key={player.id}>
+                <TableCell component="th" scope="row">
+                  {player.name}
+                </TableCell>
+                <TableCell align="left">{player.regiment}</TableCell>
+                <TableCell align="left">{player.city}</TableCell>
+                <TableCell align="left">{player.state}</TableCell>
+                <TableCell align="left">{player.rating}</TableCell>
+                <TableCell align="left">{player.bio}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
