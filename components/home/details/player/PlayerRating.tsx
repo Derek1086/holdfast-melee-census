@@ -134,7 +134,7 @@ const PlayerRating: React.FC<PlayerRatingProps> = ({ region, player }) => {
   if (playerImpact === undefined) {
     return (
       <Typography variant="body2" style={{ marginTop: "15px" }}>
-        {playerImpact === ""
+        {player.rating === ""
           ? "Impact Rating: N/A"
           : `Impact Rating: ${player.rating}`}
       </Typography>

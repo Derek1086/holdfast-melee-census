@@ -7,7 +7,12 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Paper from "@mui/material/Paper";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import Avatar from "@mui/material/Avatar";
+import findIcon from "./home/details/player/PlayerIcon";
 import { Player } from "../pages/api/playerFetching";
+import Image from "next/image";
 
 import classes from "./NavBar.module.css";
 
@@ -34,6 +39,22 @@ const NavBar: React.FC<NavBarProps> = ({
     setFilteredPlayers(event.target.value);
     setLocation("");
     searchHandler(event.target.value);
+  };
+
+  const handleInputChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: string
+  ) => {
+    if (value === "") {
+      // Clear button was clicked
+      setFilteredPlayers("");
+      setLocation("");
+      searchHandler("");
+    } else {
+      setFilteredPlayers(value);
+      setLocation("");
+      searchHandler(value);
+    }
   };
 
   return (
@@ -65,8 +86,10 @@ const NavBar: React.FC<NavBarProps> = ({
             >
               <Autocomplete
                 freeSolo
+                value={filteredPlayers}
+                onInputChange={handleInputChange}
                 sx={{ ml: 1, flex: 1 }}
-                options={searchedPlayers ? searchedPlayers.slice(0, 6) : []}
+                options={searchedPlayers ? searchedPlayers.slice(0, 4) : []}
                 getOptionLabel={(option) => {
                   // Type guard to check if option is a Player
                   if (typeof option === "string") {
@@ -76,6 +99,33 @@ const NavBar: React.FC<NavBarProps> = ({
                     ? option.regiment + " " + option.name
                     : option.name;
                   return playerName;
+                }}
+                renderOption={(props, option) => {
+                  const playerName =
+                    typeof option === "string"
+                      ? option
+                      : option.regiment
+                      ? `${option.regiment} ${option.name}`
+                      : option.name;
+                  const iconSrc =
+                    typeof option !== "string" ? findIcon(option.name) : "";
+
+                  return (
+                    <ListItemButton>
+                      <ListItemAvatar>
+                        <Avatar sx={{ background: "transparent" }}>
+                          <Image
+                            src={iconSrc}
+                            alt={playerName}
+                            height={50}
+                            width={50}
+                            unoptimized
+                          />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <Typography variant="body1">{playerName}</Typography>
+                    </ListItemButton>
+                  );
                 }}
                 renderInput={(params) => (
                   <TextField

@@ -55,16 +55,28 @@ const ListRenderer: React.FC<ListRendererProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full">
-      <Button
-        variant="contained"
-        color="secondary"
-        sx={{ width: "200px" }}
-        onClick={() => {
-          router.push("/regiments");
-        }}
-      >
-        View Regiments
-      </Button>
+      <div className="w-full flex gap-4">
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ width: "50%" }}
+          onClick={() => {
+            router.push("/regiments");
+          }}
+        >
+          Regiments
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ width: "50%" }}
+          onClick={() => {
+            router.push("/players");
+          }}
+        >
+          Players
+        </Button>
+      </div>
       <Card
         style={{
           width: "100%",
