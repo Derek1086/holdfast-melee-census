@@ -82,7 +82,7 @@ const RegimentIcon: React.FC<RegimentIconProps> = ({
         return ir21;
       case "KRA":
         return kra;
-      case "ΜΑΝΙΑΚΙ":
+      case "MANIAKI":
         return maniaki;
       case "No. 16":
         return no16;

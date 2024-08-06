@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+
+.regiments,
+.members {
+  width: 25%;
+}
+
+.info {
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    display: block;
+  }
+
+  .regiments,
+  .members,
+  .info {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

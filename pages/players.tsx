@@ -6,9 +6,9 @@ import ToolBar from "../components/ToolBar";
 import Head from "next/head";
 import PlayerTable from "../components/players/PlayerTable";
 
-type PlayersProps = {
+interface PlayersProps {
   players: RegionData[];
-};
+}
 
 const Players: React.FC<PlayersProps> = ({ players }) => {
   const [loading, setLoading] = useState(true);
