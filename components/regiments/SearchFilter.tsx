@@ -43,10 +43,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface SearchFilterProps {
+  searchQuery: string;
   setSearchQuery: (query: string) => void;
 }
 
-const SearchFilter: React.FC<SearchFilterProps> = ({ setSearchQuery }) => {
+const SearchFilter: React.FC<SearchFilterProps> = ({
+  searchQuery,
+  setSearchQuery,
+}) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
@@ -61,6 +65,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setSearchQuery }) => {
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
           onChange={handleSearchChange}
+          value={searchQuery}
         />
       </Search>
     </div>

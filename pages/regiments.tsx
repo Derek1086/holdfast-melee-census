@@ -26,6 +26,7 @@ const Regiments: React.FC<PlayersProps> = ({ players }) => {
 
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
+    setRegiment(null);
   };
 
   return (

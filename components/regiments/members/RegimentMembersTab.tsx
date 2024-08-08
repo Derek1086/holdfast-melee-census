@@ -29,6 +29,10 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
+    setSearchQuery("");
+  }, [region, regiment]);
+
+  useEffect(() => {
     if (regiment && players) {
       const regionPlayers = players
         .filter((regionData) => regionData.Region === region)
@@ -68,7 +72,10 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
       </Card>
       {expanded && !loading && (
         <>
-          <SearchFilter setSearchQuery={setSearchQuery} />
+          <SearchFilter
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
           <MembersList
             regiment={regiment}
             players={filteredPlayers}

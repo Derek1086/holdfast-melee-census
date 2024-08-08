@@ -21,6 +21,10 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
   const regiments = region === "NA" ? NAREGIMENTS : EUREGIMENTS;
 
   useEffect(() => {
+    setSearchQuery("");
+  }, [region]);
+
+  useEffect(() => {
     const filtered = regiments.filter(
       (regiment) =>
         regiment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -52,7 +56,10 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
       </Card>
       {expanded && (
         <>
-          <SearchFilter setSearchQuery={setSearchQuery} />
+          <SearchFilter
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
           <RegimentList
             region={region}
             regiments={filteredRegiments}
