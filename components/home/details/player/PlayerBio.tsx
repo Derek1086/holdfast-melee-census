@@ -1,3 +1,4 @@
+"use client";
 import Modal from "@mui/material/Modal";
 import Card from "@mui/material/Card";
 import CloseIcon from "@mui/icons-material/Close";

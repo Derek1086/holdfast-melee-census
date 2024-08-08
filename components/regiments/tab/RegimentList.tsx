@@ -6,13 +6,11 @@ import RegimentItem from "./RegimentItem";
 import { Regiment } from "../../../pages/regiments";
 
 interface RegimentListProps {
-  region: string;
   regiments: Regiment[];
   setRegiment: (regiment: Regiment) => void;
 }
 
 const RegimentList: React.FC<RegimentListProps> = ({
-  region,
   regiments,
   setRegiment,
 }) => {

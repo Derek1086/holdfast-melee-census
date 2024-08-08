@@ -1,3 +1,4 @@
+"use client";
 interface EUMapProps {
   zoomLevel: number;
   offset: { x: number; y: number };

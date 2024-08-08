@@ -1,3 +1,4 @@
+"use client";
 interface NAMapProps {
   zoomLevel: number;
   offset: { x: number; y: number };

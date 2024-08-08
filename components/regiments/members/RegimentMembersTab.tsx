@@ -1,3 +1,4 @@
+"use client";
 import Card from "@mui/material/Card";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState, useEffect } from "react";
@@ -30,7 +31,7 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
   const [sortedPlayersByRating, setSortedPlayersByRating] = useState<Player[]>(
     []
   );
-  const [ranking, setRanking] = useState(0);
+  const [ranking, setRanking] = useState<number>(0);
 
   useEffect(() => {
     setSearchQuery("");

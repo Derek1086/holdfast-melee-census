@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react"; // Import useState
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -64,7 +64,7 @@ const NavBar: React.FC<NavBarProps> = ({
     setFilteredPlayers(playerName);
     setLocation("");
     searchHandler(playerName);
-    setAutocompleteOpen(false); // Close the autocomplete dropdown
+    setAutocompleteOpen(false);
   };
 
   return (

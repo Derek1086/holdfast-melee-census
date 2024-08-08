@@ -15,6 +15,7 @@ import berry from "../../../../bioImages/berry.png";
 import Billjet from "../../../../bioImages/Billjet.png";
 import Bliinx from "../../../../bioImages/Bliinx.png";
 import Blondiii from "../../../../bioImages/Blondiii.png";
+import boobert from "../../../../bioImages/boobert.png";
 import Brax from "../../../../bioImages/Brax.png";
 import bushlinebyrant from "../../../../bioImages/bushlinebyrant.png";
 import Buxa from "../../../../bioImages/Buxa.png";
@@ -101,6 +102,7 @@ import Maksim from "../../../../bioImages/Maksim.jpg";
 import ManiakiAX from "../../../../bioImages/ManiakiAX.png";
 import Mathieu from "../../../../bioImages/mathieuwollenberg.png";
 import MattGS from "../../../../bioImages/MattGS.png";
+import Meyer from "../../../../bioImages/Meyer.png";
 import Mattrobes from "../../../../bioImages/Mattrobes.png";
 import MilkMan from "../../../../bioImages/MilkMan.png";
 import Milosz from "../../../../bioImages/Milosz.png";
@@ -124,6 +126,7 @@ import Peop from "../../../../bioImages/Poep.png";
 import Pilot from "../../../../bioImages/Pilot.png";
 import Power from "../../../../bioImages/Power.png";
 import PRC from "../../../../bioImages/PRC.png";
+import Pars from "../../../../bioImages/Pars.png";
 import Rave from "../../../../bioImages/Rave.png";
 import Reddishh from "../../../../bioImages/Reddishh.png";
 import Rekt from "../../../../bioImages/Rekt.png";
@@ -155,6 +158,7 @@ import Wilson from "../../../../bioImages/Wilson.png";
 import Wink from "../../../../bioImages/Wink.png";
 import yoenkong from "../../../../bioImages/yoenkong.png";
 import ytug from "../../../../bioImages/ytug.png";
+import Xam515 from "../../../../bioImages/Xam515.png";
 import Zahar from "../../../../bioImages/Zahar.png";
 import Zakk from "../../../../bioImages/Zakk.png";
 
@@ -187,6 +191,8 @@ export default function findIcon(name: string) {
       return Bandej;
     case "BILLJET":
       return Billjet;
+    case "Boobert":
+      return boobert;
     case "Bliinx":
       return Bliinx;
     case "Blondiii":
@@ -367,6 +373,8 @@ export default function findIcon(name: string) {
       return MattGS;
     case "MIKA":
       return Mika;
+    case "Meyer":
+      return Meyer;
     case "Mattrobes":
       return Mattrobes;
     case "The Milk Man":
@@ -395,6 +403,8 @@ export default function findIcon(name: string) {
       return Paddy;
     case "Pachinko":
       return Pachinko;
+    case "Pars":
+      return Pars;
     case "peffry ping":
       return Peffryping;
     case "ノア":
@@ -473,6 +483,8 @@ export default function findIcon(name: string) {
       return ytug;
     case "WolfzHeartz499":
       return WolfzHeartz499;
+    case "Xam515":
+      return Xam515;
     case "Yoenkong":
       return yoenkong;
     case "Zahar":

@@ -1,9 +1,9 @@
+"use client";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import RegimentIcon from "../RegimentIcon";
 import { Player } from "../../../pages/api/playerFetching";
 import findIcon from "../../home/details/player/PlayerIcon";
 import Image from "next/image";

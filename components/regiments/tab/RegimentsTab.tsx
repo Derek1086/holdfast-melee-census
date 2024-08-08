@@ -61,7 +61,6 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
             setSearchQuery={setSearchQuery}
           />
           <RegimentList
-            region={region}
             regiments={filteredRegiments}
             setRegiment={setRegiment}
           />
