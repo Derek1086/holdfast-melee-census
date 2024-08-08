@@ -136,21 +136,21 @@ const PlayerRating: React.FC<PlayerRatingProps> = ({
     }
   }, [region, player]);
 
-  if (playerImpact === undefined) {
-    return (
-      <Typography variant="body2" style={{ marginTop: "15px" }}>
-        {player.rating === ""
-          ? "Impact Rating: N/A"
-          : `Impact Rating: ${player.rating} (#${ranking})`}
-      </Typography>
-    );
-  }
+  // if (playerImpact === undefined) {
+  //   return (
+  //     <Typography variant="body2" style={{ marginTop: "15px" }}>
+  //       {player.rating === ""
+  //         ? "Impact Rating: N/A"
+  //         : `Impact Rating: ${player.rating} (#${ranking})`}
+  //     </Typography>
+  //   );
+  // }
 
   return (
     <Typography variant="body2" style={{ marginTop: "15px" }}>
-      {playerImpact === ""
+      {player.rating === ""
         ? "Impact Rating: N/A"
-        : `Impact Rating: ${playerImpact} (#${ranking})`}
+        : `Impact Rating: ${player.rating} (#${ranking})`}
     </Typography>
   );
 };
