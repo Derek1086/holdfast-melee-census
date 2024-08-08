@@ -1,5 +1,6 @@
 import clientPromise from "../lib/mongodb";
 import { Player, RegionData } from "./api/playerFetching";
+import Card from "@mui/material/Card";
 import NavBar from "../components/home/NavBar";
 import HomeLoader from "../components/loaders/HomeLoader";
 import MapActions from "../components/home/maps/MapActions";
@@ -117,15 +118,23 @@ const Home: React.FC<Props> = ({ players }) => {
   }, [regionalPlayers, setSearchedPlayers, region, location]);
 
   const searchHandler = (text: string) => {
-    if (text === "" && regionalPlayers && regionalPlayers.players) {
+    if (!text && regionalPlayers && regionalPlayers.players) {
       setSearchedPlayers(regionalPlayers.players);
+      return;
     }
+
     if (regionalPlayers && regionalPlayers.players) {
-      const searchResults = regionalPlayers.players.filter(
-        (player: Player) =>
-          player.name.toLowerCase().includes(text) ||
-          player.regiment.toLowerCase().includes(text)
-      );
+      // Split the search text into words
+      const searchTerms = text.toLowerCase().split(" ").filter(Boolean);
+
+      const searchResults = regionalPlayers.players.filter((player: Player) => {
+        // Combine regiment and name for each player
+        const fullName = `${player.regiment} ${player.name}`.toLowerCase();
+
+        // Check if every search term is found in the full name
+        return searchTerms.every((term) => fullName.includes(term));
+      });
+
       setSearchedPlayers(searchResults);
     }
   };
@@ -296,34 +305,41 @@ const Home: React.FC<Props> = ({ players }) => {
               zoomOutHandler={zoomOutHandler}
               resetZoomHandler={resetZoomHandler}
             />
-
-            {region === "NA" ? (
-              <NAMap
-                zoomLevel={zoomLevel}
-                offset={offset}
-                mouseDownHandler={mouseDownHandler}
-                mouseMoveHandler={mouseMoveHandler}
-                mouseUpHandler={mouseUpHandler}
-                mouseLeaveBoxHandler={mouseLeaveBoxHandler}
-                mouseEnterHandler={mouseEnterHandler}
-                mouseLeaveHandler={mouseLeaveHandler}
-                updateColorHandler={updateColorHandler}
-                locationSelectHandler={locationSelectHandler}
-              />
-            ) : (
-              <EUMap
-                zoomLevel={zoomLevel}
-                offset={offset}
-                mouseDownHandler={mouseDownHandler}
-                mouseMoveHandler={mouseMoveHandler}
-                mouseUpHandler={mouseUpHandler}
-                mouseLeaveBoxHandler={mouseLeaveBoxHandler}
-                mouseEnterHandler={mouseEnterHandler}
-                mouseLeaveHandler={mouseLeaveHandler}
-                updateColorHandler={updateColorHandler}
-                locationSelectHandler={locationSelectHandler}
-              />
-            )}
+            <Card
+              sx={{
+                marginTop: "15px",
+                width: "100%",
+                height: "75vh",
+              }}
+            >
+              {region === "NA" ? (
+                <NAMap
+                  zoomLevel={zoomLevel}
+                  offset={offset}
+                  mouseDownHandler={mouseDownHandler}
+                  mouseMoveHandler={mouseMoveHandler}
+                  mouseUpHandler={mouseUpHandler}
+                  mouseLeaveBoxHandler={mouseLeaveBoxHandler}
+                  mouseEnterHandler={mouseEnterHandler}
+                  mouseLeaveHandler={mouseLeaveHandler}
+                  updateColorHandler={updateColorHandler}
+                  locationSelectHandler={locationSelectHandler}
+                />
+              ) : (
+                <EUMap
+                  zoomLevel={zoomLevel}
+                  offset={offset}
+                  mouseDownHandler={mouseDownHandler}
+                  mouseMoveHandler={mouseMoveHandler}
+                  mouseUpHandler={mouseUpHandler}
+                  mouseLeaveBoxHandler={mouseLeaveBoxHandler}
+                  mouseEnterHandler={mouseEnterHandler}
+                  mouseLeaveHandler={mouseLeaveHandler}
+                  updateColorHandler={updateColorHandler}
+                  locationSelectHandler={locationSelectHandler}
+                />
+              )}
+            </Card>
           </div>
           <div className={`flex flex-col items-center ${classes.details}`}>
             <ListRenderer

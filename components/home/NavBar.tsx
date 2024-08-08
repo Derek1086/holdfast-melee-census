@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react"; // Import useState
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -35,6 +36,8 @@ const NavBar: React.FC<NavBarProps> = ({
   searchHandler,
   searchedPlayers,
 }) => {
+  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
+
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredPlayers(event.target.value);
     setLocation("");
@@ -45,16 +48,23 @@ const NavBar: React.FC<NavBarProps> = ({
     event: React.SyntheticEvent<Element, Event>,
     value: string
   ) => {
-    if (value === "") {
-      // Clear button was clicked
-      setFilteredPlayers("");
-      setLocation("");
-      searchHandler("");
-    } else {
-      setFilteredPlayers(value);
-      setLocation("");
-      searchHandler(value);
-    }
+    setFilteredPlayers(value);
+    setLocation("");
+    searchHandler(value);
+  };
+
+  const handleOptionClick = (option: any) => {
+    const playerName =
+      typeof option === "string"
+        ? option
+        : option.regiment
+        ? `${option.regiment} ${option.name}`
+        : option.name;
+
+    setFilteredPlayers(playerName);
+    setLocation("");
+    searchHandler(playerName);
+    setAutocompleteOpen(false); // Close the autocomplete dropdown
   };
 
   return (
@@ -88,10 +98,12 @@ const NavBar: React.FC<NavBarProps> = ({
                 freeSolo
                 value={filteredPlayers}
                 onInputChange={handleInputChange}
-                sx={{ ml: 1, flex: 1 }}
+                open={autocompleteOpen}
+                onOpen={() => setAutocompleteOpen(true)}
+                onClose={() => setAutocompleteOpen(false)}
+                sx={{ ml: 1, flex: 1, zIndex: 1300 }}
                 options={searchedPlayers ? searchedPlayers.slice(0, 4) : []}
                 getOptionLabel={(option) => {
-                  // Type guard to check if option is a Player
                   if (typeof option === "string") {
                     return option;
                   }
@@ -111,7 +123,10 @@ const NavBar: React.FC<NavBarProps> = ({
                     typeof option !== "string" ? findIcon(option.name) : "";
 
                   return (
-                    <ListItemButton>
+                    <ListItemButton
+                      onClick={() => handleOptionClick(option)}
+                      key={option.name}
+                    >
                       <ListItemAvatar>
                         <Avatar sx={{ background: "transparent" }}>
                           <Image

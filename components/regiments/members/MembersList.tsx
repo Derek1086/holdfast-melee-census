@@ -3,15 +3,18 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import MemberItem from "./MemberItem";
-import { RegionData, Player } from "../../../pages/api/playerFetching";
+import { Player } from "../../../pages/api/playerFetching";
 import { Regiment } from "../../../pages/regiments";
 import PlayerBio from "../../home/details/player/PlayerBio";
+import { getAverageRating } from "../../home/details/ListRenderer";
 
 interface MembersListProps {
   regiment: Regiment | null;
-  players: RegionData[];
+  players: Player[];
   region: string;
   setNumMembers: React.Dispatch<React.SetStateAction<number>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setAverageRating: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MembersList: React.FC<MembersListProps> = ({
@@ -19,9 +22,10 @@ const MembersList: React.FC<MembersListProps> = ({
   players,
   region,
   setNumMembers,
+  setLoading,
+  setAverageRating,
 }) => {
   const [members, setMembers] = useState<Player[]>([]);
-  const [loading, setLoading] = useState(true);
   const [viewingPlayer, setViewingPlayer] = useState<Player | null>(null);
 
   useEffect(() => {
@@ -29,13 +33,12 @@ const MembersList: React.FC<MembersListProps> = ({
       if (regiment) {
         setLoading(true);
         try {
-          const regionData = players;
-          const allPlayers = regionData.flatMap((region) => region.players);
-          const filteredPlayers = allPlayers.filter(
+          const filteredPlayers = players.filter(
             (player) => player.regiment === regiment.tag
           );
           setMembers(filteredPlayers);
           setNumMembers(filteredPlayers.length);
+          setAverageRating(getAverageRating(filteredPlayers));
         } catch (error) {
           console.error("Failed to fetch players", error);
         } finally {
@@ -45,23 +48,10 @@ const MembersList: React.FC<MembersListProps> = ({
     };
 
     loadPlayers();
-  }, [regiment]);
+  }, [regiment, players, setLoading, setNumMembers, setAverageRating]);
 
   if (!regiment) {
     return null;
-  }
-
-  if (loading) {
-    return (
-      <Typography
-        variant="subtitle1"
-        noWrap
-        component="div"
-        sx={{ textAlign: "center", marginTop: "15px" }}
-      >
-        Loading players...
-      </Typography>
-    );
   }
 
   if (!members || members.length === 0) {
@@ -84,7 +74,7 @@ const MembersList: React.FC<MembersListProps> = ({
         setViewingPlayer={setViewingPlayer}
         region={region}
       />
-      <div style={{ height: "480px" }}>
+      <div style={{ height: "55vh" }}>
         <List
           sx={{
             width: "100%",

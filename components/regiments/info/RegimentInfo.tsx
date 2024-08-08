@@ -7,9 +7,13 @@ import classes from "../Regiments.module.css";
 
 interface RegimentInfoProps {
   regiment: Regiment | null;
+  averageRating: number;
 }
 
-const RegimentInfo: React.FC<RegimentInfoProps> = ({ regiment }) => {
+const RegimentInfo: React.FC<RegimentInfoProps> = ({
+  regiment,
+  averageRating,
+}) => {
   if (!regiment) {
     return <div className={classes.info} />;
   }
@@ -38,6 +42,14 @@ const RegimentInfo: React.FC<RegimentInfoProps> = ({ regiment }) => {
         sx={{ textAlign: "center", marginTop: "15px", marginBottom: "15px" }}
       >
         {regiment.name}
+      </Typography>
+      <Typography
+        variant="body1"
+        noWrap
+        component="div"
+        sx={{ textAlign: "center", marginTop: "7px", marginBottom: "15px" }}
+      >
+        Average Impact Rating: {averageRating}
       </Typography>
       {regiment.description.map((line, index) => (
         <Typography

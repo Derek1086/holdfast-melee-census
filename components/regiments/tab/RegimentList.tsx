@@ -3,17 +3,19 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import RegimentItem from "./RegimentItem";
-import { NAREGIMENTS, EUREGIMENTS } from "../RegimentRegistry";
 import { Regiment } from "../../../pages/regiments";
 
 interface RegimentListProps {
   region: string;
+  regiments: Regiment[];
   setRegiment: (regiment: Regiment) => void;
 }
 
-const RegimentList: React.FC<RegimentListProps> = ({ region, setRegiment }) => {
-  const regiments = region === "NA" ? NAREGIMENTS : EUREGIMENTS;
-
+const RegimentList: React.FC<RegimentListProps> = ({
+  region,
+  regiments,
+  setRegiment,
+}) => {
   if (!regiments || regiments.length === 0) {
     return (
       <Typography
@@ -28,7 +30,7 @@ const RegimentList: React.FC<RegimentListProps> = ({ region, setRegiment }) => {
   }
 
   return (
-    <div style={{ height: "480px" }}>
+    <div style={{ height: "55vh" }}>
       <List
         sx={{
           width: "100%",

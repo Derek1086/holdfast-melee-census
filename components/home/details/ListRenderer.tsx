@@ -8,6 +8,24 @@ import { Player } from "../../../pages/api/playerFetching";
 import { useEffect, useState } from "react";
 import { Divider } from "@mui/material";
 
+export const getAverageRating = (sortedPlayers: Player[]) => {
+  if (!sortedPlayers || sortedPlayers.length === 0) {
+    return 0;
+  }
+  const validRatings = sortedPlayers
+    .filter((player) => player.rating !== "")
+    .map((player) => parseFloat(player.rating));
+
+  if (validRatings.length === 0) {
+    return 0;
+  }
+
+  const totalRating = validRatings.reduce((sum, rating) => sum + rating, 0);
+  const averageRating = totalRating / validRatings.length;
+
+  return Number(averageRating.toFixed(2));
+};
+
 interface ListRendererProps {
   region: string;
   location: string;
@@ -25,24 +43,6 @@ const ListRenderer: React.FC<ListRendererProps> = ({
 }) => {
   const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
   const router = useRouter();
-
-  const getAverageRating = () => {
-    if (!sortedPlayers || sortedPlayers.length === 0) {
-      return 0;
-    }
-    const validRatings = sortedPlayers
-      .filter((player) => player.rating !== "")
-      .map((player) => parseFloat(player.rating));
-
-    if (validRatings.length === 0) {
-      return 0;
-    }
-
-    const totalRating = validRatings.reduce((sum, rating) => sum + rating, 0);
-    const averageRating = totalRating / validRatings.length;
-
-    return Number(averageRating.toFixed(2));
-  };
 
   useEffect(() => {
     if (searchedPlayers && location === "") {
@@ -79,7 +79,7 @@ const ListRenderer: React.FC<ListRendererProps> = ({
       <Card
         style={{
           width: "100%",
-          height: "500px",
+          height: "75vh",
           padding: "15px",
           marginTop: "18px",
         }}
@@ -95,7 +95,7 @@ const ListRenderer: React.FC<ListRendererProps> = ({
           >
             Players - {sortedPlayers?.length}
             <br />
-            Average Impact Rating: {getAverageRating()}
+            Average Impact Rating: {getAverageRating(sortedPlayers)}
           </Typography>
         ) : (
           <Typography

@@ -22,6 +22,7 @@ interface PlayersProps {
 const Regiments: React.FC<PlayersProps> = ({ players }) => {
   const [region, setRegion] = useState<string>("NA");
   const [regiment, setRegiment] = useState<Regiment | null>(null);
+  const [averageRating, setAverageRating] = useState<number>(0);
 
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
@@ -40,11 +41,12 @@ const Regiments: React.FC<PlayersProps> = ({ players }) => {
         </h1>
         <div className={classes.container}>
           <RegimentsTab region={region} setRegiment={setRegiment} />
-          <RegimentInfo regiment={regiment} />
+          <RegimentInfo regiment={regiment} averageRating={averageRating} />
           <RegimentMembersTab
             regiment={regiment}
             players={players}
             region={region}
+            setAverageRating={setAverageRating}
           />
         </div>
       </div>

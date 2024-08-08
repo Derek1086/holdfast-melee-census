@@ -1,8 +1,10 @@
 import Card from "@mui/material/Card";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RegimentList from "./RegimentList";
 import { Regiment } from "../../../pages/regiments";
+import SearchFilter from "../SearchFilter";
+import { NAREGIMENTS, EUREGIMENTS } from "../RegimentRegistry";
 
 import classes from "../Regiments.module.css";
 
@@ -12,7 +14,20 @@ interface RegimentsTabProps {
 }
 
 const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredRegiments, setFilteredRegiments] = useState<Regiment[]>([]);
+
+  const regiments = region === "NA" ? NAREGIMENTS : EUREGIMENTS;
+
+  useEffect(() => {
+    const filtered = regiments.filter(
+      (regiment) =>
+        regiment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        regiment.tag.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredRegiments(filtered);
+  }, [searchQuery, region]);
 
   return (
     <div className={classes.regiments}>
@@ -35,7 +50,16 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
           }}
         />
       </Card>
-      {expanded && <RegimentList region={region} setRegiment={setRegiment} />}
+      {expanded && (
+        <>
+          <SearchFilter setSearchQuery={setSearchQuery} />
+          <RegimentList
+            region={region}
+            regiments={filteredRegiments}
+            setRegiment={setRegiment}
+          />
+        </>
+      )}
     </div>
   );
 };

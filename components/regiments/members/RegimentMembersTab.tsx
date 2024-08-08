@@ -1,9 +1,11 @@
 import Card from "@mui/material/Card";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Regiment } from "../../../pages/regiments";
 import MembersList from "./MembersList";
-import { RegionData } from "../../../pages/api/playerFetching";
+import { RegionData, Player } from "../../../pages/api/playerFetching";
+import RegimentListLoader from "../../loaders/RegimentListLoader";
+import SearchFilter from "../SearchFilter";
 
 import classes from "../Regiments.module.css";
 
@@ -11,15 +13,37 @@ interface RegimentMembersTabProps {
   regiment: Regiment | null;
   players: RegionData[];
   region: string;
+  setAverageRating: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
   regiment,
   players,
   region,
+  setAverageRating,
 }) => {
-  const [expanded, setExpanded] = useState(true);
-  const [numMembers, setNumMembers] = useState(0);
+  const [numMembers, setNumMembers] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
+
+  useEffect(() => {
+    if (regiment && players) {
+      const regionPlayers = players
+        .filter((regionData) => regionData.Region === region)
+        .flatMap((regionData) => regionData.players);
+
+      const searchResults = regionPlayers.filter(
+        (player: Player) =>
+          player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          player.regiment.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      setFilteredPlayers(searchResults);
+      setNumMembers(searchResults.length);
+    }
+  }, [searchQuery, players, regiment, region]);
 
   return (
     <div className={classes.regiments}>
@@ -42,14 +66,20 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
           }}
         />
       </Card>
-      {expanded && (
-        <MembersList
-          regiment={regiment}
-          players={players}
-          region={region}
-          setNumMembers={setNumMembers}
-        />
+      {expanded && !loading && (
+        <>
+          <SearchFilter setSearchQuery={setSearchQuery} />
+          <MembersList
+            regiment={regiment}
+            players={filteredPlayers}
+            region={region}
+            setNumMembers={setNumMembers}
+            setLoading={setLoading}
+            setAverageRating={setAverageRating}
+          />
+        </>
       )}
+      {expanded && loading && <RegimentListLoader />}
     </div>
   );
 };
