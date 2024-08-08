@@ -27,6 +27,10 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
   const [expanded, setExpanded] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
+  const [sortedPlayersByRating, setSortedPlayersByRating] = useState<Player[]>(
+    []
+  );
+  const [ranking, setRanking] = useState(0);
 
   useEffect(() => {
     setSearchQuery("");
@@ -37,6 +41,14 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
       const regionPlayers = players
         .filter((regionData) => regionData.Region === region)
         .flatMap((regionData) => regionData.players);
+
+      const sortedPlayers = [...regionPlayers].sort((a: Player, b: Player) => {
+        const ratingA = a.rating ? Number(a.rating) : 0;
+        const ratingB = b.rating ? Number(b.rating) : 0;
+        return ratingB - ratingA;
+      });
+
+      setSortedPlayersByRating(sortedPlayers);
 
       const searchResults = regionPlayers.filter(
         (player: Player) =>
@@ -83,6 +95,9 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
             setNumMembers={setNumMembers}
             setLoading={setLoading}
             setAverageRating={setAverageRating}
+            sortedPlayersByRating={sortedPlayersByRating}
+            ranking={ranking}
+            setRanking={setRanking}
           />
         </>
       )}

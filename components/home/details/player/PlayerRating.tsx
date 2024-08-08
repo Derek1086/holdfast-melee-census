@@ -6,6 +6,7 @@ import { Player } from "../../../../pages/api/playerFetching";
 interface PlayerRatingProps {
   region: string;
   player: Player;
+  ranking: number;
 }
 
 interface PlayerRatingData {
@@ -111,8 +112,12 @@ async function getSpreadsheetValues(region: string, playerId: string) {
   }
 }
 
-const PlayerRating: React.FC<PlayerRatingProps> = ({ region, player }) => {
-  if (!player || !region) {
+const PlayerRating: React.FC<PlayerRatingProps> = ({
+  region,
+  player,
+  ranking,
+}) => {
+  if (!player || !region || !ranking) {
     return <></>;
   }
 
@@ -136,7 +141,7 @@ const PlayerRating: React.FC<PlayerRatingProps> = ({ region, player }) => {
       <Typography variant="body2" style={{ marginTop: "15px" }}>
         {player.rating === ""
           ? "Impact Rating: N/A"
-          : `Impact Rating: ${player.rating}`}
+          : `Impact Rating: ${player.rating} (#${ranking})`}
       </Typography>
     );
   }
@@ -145,7 +150,7 @@ const PlayerRating: React.FC<PlayerRatingProps> = ({ region, player }) => {
     <Typography variant="body2" style={{ marginTop: "15px" }}>
       {playerImpact === ""
         ? "Impact Rating: N/A"
-        : `Impact Rating: ${playerImpact}`}
+        : `Impact Rating: ${playerImpact} (#${ranking})`}
     </Typography>
   );
 };

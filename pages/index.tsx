@@ -71,17 +71,27 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 const Home: React.FC<Props> = ({ players }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [region, setRegion] = useState<string>("NA");
   const [location, setLocation] = useState<string>("");
   const [playersInLocation, setPlayersInLocation] = useState<Player[]>([]);
   const [viewingPlayer, setViewingPlayer] = useState<Player | null>(null);
   const [filteredPlayers, setFilteredPlayers] = useState<string>("");
   const [searchedPlayers, setSearchedPlayers] = useState<Player[] | null>(null);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [sortedPlayersByRating, setSortedPlayersByRating] = useState<Player[]>(
+    []
+  );
+  const [ranking, setRanking] = useState<number>(0);
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const [offset, setOffset] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
@@ -95,8 +105,28 @@ const Home: React.FC<Props> = ({ players }) => {
   );
 
   useEffect(() => {
+    if (viewingPlayer) {
+      setRanking(
+        sortedPlayersByRating.findIndex(
+          (player) => player.id === viewingPlayer.id
+        )
+      );
+    }
+  }, [viewingPlayer]);
+
+  useEffect(() => {
     if (regionalPlayers && regionalPlayers.players) {
       const initialSearchedPlayers = regionalPlayers.players;
+
+      const sortedPlayers = [...regionalPlayers.players].sort(
+        (a: Player, b: Player) => {
+          const ratingA = a.rating ? Number(a.rating) : 0;
+          const ratingB = b.rating ? Number(b.rating) : 0;
+          return ratingB - ratingA;
+        }
+      );
+
+      setSortedPlayersByRating(sortedPlayers);
       setSearchedPlayers(initialSearchedPlayers);
       setPlayersInLocation(
         regionalPlayers
@@ -124,14 +154,10 @@ const Home: React.FC<Props> = ({ players }) => {
     }
 
     if (regionalPlayers && regionalPlayers.players) {
-      // Split the search text into words
       const searchTerms = text.toLowerCase().split(" ").filter(Boolean);
 
       const searchResults = regionalPlayers.players.filter((player: Player) => {
-        // Combine regiment and name for each player
         const fullName = `${player.regiment} ${player.name}`.toLowerCase();
-
-        // Check if every search term is found in the full name
         return searchTerms.every((term) => fullName.includes(term));
       });
 
@@ -285,6 +311,7 @@ const Home: React.FC<Props> = ({ players }) => {
         viewingPlayer={viewingPlayer}
         setViewingPlayer={setViewingPlayer}
         region={region}
+        ranking={ranking}
       />
       <NavBar
         region={region}

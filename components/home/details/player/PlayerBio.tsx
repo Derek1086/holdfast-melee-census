@@ -24,12 +24,14 @@ interface PlayerBioProps {
   viewingPlayer: Player | null;
   setViewingPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   region: string;
+  ranking: number;
 }
 
 const PlayerBio: React.FC<PlayerBioProps> = ({
   viewingPlayer,
   setViewingPlayer,
   region,
+  ranking,
 }) => {
   if (!viewingPlayer) {
     return null;
@@ -41,6 +43,8 @@ const PlayerBio: React.FC<PlayerBioProps> = ({
   const playerLocation = viewingPlayer.city
     ? viewingPlayer.city + ", " + viewingPlayer.state
     : viewingPlayer.state;
+
+  ranking = ranking + 1;
 
   return (
     <Modal
@@ -89,7 +93,11 @@ const PlayerBio: React.FC<PlayerBioProps> = ({
           </Typography>
         </div>
         <Typography variant="body2">{viewingPlayer.bio}</Typography>
-        <PlayerRating player={viewingPlayer} region={region} />
+        <PlayerRating
+          player={viewingPlayer}
+          region={region}
+          ranking={ranking}
+        />
       </Card>
     </Modal>
   );

@@ -15,6 +15,9 @@ interface MembersListProps {
   setNumMembers: React.Dispatch<React.SetStateAction<number>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setAverageRating: React.Dispatch<React.SetStateAction<number>>;
+  sortedPlayersByRating: Player[];
+  ranking: number;
+  setRanking: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MembersList: React.FC<MembersListProps> = ({
@@ -24,9 +27,22 @@ const MembersList: React.FC<MembersListProps> = ({
   setNumMembers,
   setLoading,
   setAverageRating,
+  sortedPlayersByRating,
+  ranking,
+  setRanking,
 }) => {
   const [members, setMembers] = useState<Player[]>([]);
   const [viewingPlayer, setViewingPlayer] = useState<Player | null>(null);
+
+  useEffect(() => {
+    if (viewingPlayer) {
+      setRanking(
+        sortedPlayersByRating.findIndex(
+          (player) => player.id === viewingPlayer.id
+        )
+      );
+    }
+  }, [viewingPlayer]);
 
   useEffect(() => {
     const loadPlayers = () => {
@@ -73,6 +89,7 @@ const MembersList: React.FC<MembersListProps> = ({
         viewingPlayer={viewingPlayer}
         setViewingPlayer={setViewingPlayer}
         region={region}
+        ranking={ranking}
       />
       <div style={{ height: "55vh" }}>
         <List
