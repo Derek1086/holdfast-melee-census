@@ -7,22 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import { RegionData } from "../../pages/api/playerFetching";
+import { RegionData, Player } from "../../pages/api/playerFetching";
 
-type Player = {
-  id: number;
-  name: string;
-  regiment: string;
-  city: string;
-  state: string;
-  rating: number;
-  bio: string;
-};
-
-type PlayerTableProps = {
+interface PlayerTableProps {
   regionalPlayers: RegionData[];
   region: string;
-};
+}
 
 type Order = "asc" | "desc";
 
@@ -31,7 +21,9 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
   region,
 }) => {
   // Filter players by region
-  const playersData = regionalPlayers.find((data) => data.Region === region);
+  const playersData = regionalPlayers.find(
+    (data: RegionData) => data.Region === region
+  );
 
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Player>("name");
