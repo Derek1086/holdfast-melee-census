@@ -77,7 +77,6 @@ const UserForm: React.FC<UserFormProps> = ({
       region.trim() !== "" &&
       id.trim() !== "" &&
       name.trim() !== "" &&
-      regiment.trim() !== "" &&
       stateCountry.trim() !== "";
 
     setIsButtonDisabled(!isValid);
@@ -111,7 +110,7 @@ const UserForm: React.FC<UserFormProps> = ({
     });
 
     // Check for errors
-    if (!region || !id || !name || !regiment || !stateCountry) {
+    if (!region || !id || !name || !stateCountry) {
       return;
     }
 
@@ -244,7 +243,7 @@ const UserForm: React.FC<UserFormProps> = ({
             error={errors.name}
             helperText={errors.name ? "Name is required." : ""}
           />
-          <FormControl required sx={{ minWidth: 120 }}>
+          <FormControl sx={{ minWidth: 120 }}>
             {region === "NA" && (
               <Select
                 id="regiment"
