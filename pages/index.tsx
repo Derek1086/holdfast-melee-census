@@ -13,11 +13,11 @@ import Head from "next/head";
 
 import classes from "../components/home/Home.module.css";
 
-export type Props = {
+interface HomeProps {
   players: RegionData[];
-};
+}
 
-const Home: React.FC<Props> = ({ players }) => {
+const Home: React.FC<HomeProps> = ({ players }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [region, setRegion] = useState<string>("NA");
   const [location, setLocation] = useState<string>("");

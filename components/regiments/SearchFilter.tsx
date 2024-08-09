@@ -12,12 +12,7 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
   width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -57,7 +52,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   };
 
   return (
-    <div style={{ width: "100%", marginTop: "15px" }}>
+    <div style={{ width: "100%" }}>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />

@@ -9,17 +9,7 @@ import { Player } from "../../../../pages/api/playerFetching";
 import findIcon from "./PlayerIcon";
 import Image from "next/image";
 import RegimentIcon from "../../../regiments/RegimentIcon";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
+import { modalStyle } from "../../../admin/UserForm";
 
 interface PlayerBioProps {
   viewingPlayer: Player | null;
@@ -54,7 +44,7 @@ const PlayerBio: React.FC<PlayerBioProps> = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Card sx={{ ...style, position: "relative" }}>
+      <Card sx={{ ...modalStyle, position: "relative" }}>
         <div style={{ position: "absolute", top: 4, right: 4 }}>
           <IconButton aria-label="close" onClick={() => setViewingPlayer(null)}>
             <CloseIcon />

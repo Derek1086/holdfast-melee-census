@@ -55,7 +55,7 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
         />
       </Card>
       {expanded && (
-        <>
+        <div className="mt-4">
           <SearchFilter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -64,7 +64,7 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
             regiments={filteredRegiments}
             setRegiment={setRegiment}
           />
-        </>
+        </div>
       )}
     </div>
   );

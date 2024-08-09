@@ -84,7 +84,7 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
         />
       </Card>
       {expanded && !loading && (
-        <>
+        <div className="mt-4">
           <SearchFilter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -100,7 +100,7 @@ const RegimentMembersTab: React.FC<RegimentMembersTabProps> = ({
             ranking={ranking}
             setRanking={setRanking}
           />
-        </>
+        </div>
       )}
       {expanded && loading && <RegimentListLoader />}
     </div>

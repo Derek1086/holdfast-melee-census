@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-var NAREGIONS = [
+export const NAREGIONS = [
   ["Alabama", "AL"],
   ["Alaska", "AK"],
   ["American Samoa", "AS"],
@@ -77,7 +77,7 @@ var NAREGIONS = [
   ["Newfoundland and Labrador", "NL"],
 ];
 
-var EUREGIONS = [
+export const EUREGIONS = [
   ["Albania", "AL"],
   ["Kazakhstan", "KZ"],
   ["Andorra", "AD"],
@@ -131,7 +131,6 @@ var EUREGIONS = [
   ["Netherlands", "NL"],
   ["Spain", "ES"],
   ["France", "FR"],
-  ["Portugal", "PT"],
   ["Gibraltar", "GI"],
   ["Russia", "RU"],
   ["Cyprus", "CY"],
