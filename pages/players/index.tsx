@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
-import { fetchPlayersData, RegionData } from "./api/playerFetching";
-import PlayersLoader from "../components/loaders/PlayersLoader";
+import { fetchPlayersData, RegionData } from "../api/playerFetching";
+import PlayersLoader from "../../components/loaders/PlayersLoader";
 import { useState, useEffect } from "react";
-import ToolBar from "../components/ToolBar";
+import ToolBar from "../../components/ToolBar";
 import Head from "next/head";
-import PlayerTable from "../components/players/PlayerTable";
+import PlayerTable from "../../components/players/PlayerTable";
 
 interface PlayersProps {
   players: RegionData[];

@@ -1,13 +1,13 @@
-import ToolBar from "../components/ToolBar";
+import ToolBar from "../../components/ToolBar";
 import { GetServerSideProps } from "next";
-import { fetchPlayersData, RegionData } from "./api/playerFetching";
+import { fetchPlayersData, RegionData } from "../api/playerFetching";
 import { useState } from "react";
 import Head from "next/head";
-import RegimentsTab from "../components/regiments/tab/RegimentsTab";
-import RegimentInfo from "../components/regiments/info/RegimentInfo";
-import RegimentMembersTab from "../components/regiments/members/RegimentMembersTab";
+import RegimentsTab from "../../components/regiments/tab/RegimentsTab";
+import RegimentInfo from "../../components/regiments/info/RegimentInfo";
+import RegimentMembersTab from "../../components/regiments/members/RegimentMembersTab";
 
-import classes from "../components/regiments/Regiments.module.css";
+import classes from "../../components/regiments/Regiments.module.css";
 
 export type Regiment = {
   name: string;

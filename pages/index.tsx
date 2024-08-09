@@ -1,5 +1,4 @@
-import clientPromise from "../lib/mongodb";
-import { Player, RegionData } from "./api/playerFetching";
+import { Player, RegionData, fetchPlayersData } from "./api/playerFetching";
 import Card from "@mui/material/Card";
 import NavBar from "../components/home/NavBar";
 import HomeLoader from "../components/loaders/HomeLoader";
@@ -8,7 +7,7 @@ import ListRenderer from "../components/home/details/ListRenderer";
 import NAMap from "../components/home/maps/NAMap";
 import EUMap from "../components/home/maps/EUMap";
 import PlayerBio from "../components/home/details/player/PlayerBio";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
@@ -16,58 +15,6 @@ import classes from "../components/home/Home.module.css";
 
 export type Props = {
   players: RegionData[];
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  try {
-    const client = await clientPromise;
-    const db = client.db("HOLDFASTMAP");
-
-    // Fetch data from the NAREGION collection
-    const naRegionData = await db
-      .collection("NAREGION")
-      .find({})
-      .sort({})
-      .limit(500)
-      .toArray();
-
-    // Fetch data from the EUREGION collection
-    const euRegionData = await db
-      .collection("EUREGION")
-      .find({})
-      .sort({})
-      .limit(500)
-      .toArray();
-
-    const transformData = (data: any): RegionData[] => {
-      return data.map((entry: any) => ({
-        _id: entry._id,
-        Region: entry.Region,
-        players: entry.players.map((player: any) => ({
-          id: player.id,
-          name: player.name,
-          regiment: player.regiment,
-          city: player.city,
-          bio: player.bio,
-          state: player.state,
-          rating: player.rating,
-        })),
-      }));
-    };
-
-    const transformedNaRegionData = transformData(naRegionData);
-    const transformedEuRegionData = transformData(euRegionData);
-
-    const allData = transformedNaRegionData.concat(transformedEuRegionData);
-    return {
-      props: { players: JSON.parse(JSON.stringify(allData)) },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { players: [] },
-    };
-  }
 };
 
 const Home: React.FC<Props> = ({ players }) => {
@@ -381,6 +328,20 @@ const Home: React.FC<Props> = ({ players }) => {
       )}
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const players = await fetchPlayersData();
+    return {
+      props: { players: JSON.parse(JSON.stringify(players)) },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      props: { players: [] },
+    };
+  }
 };
 
 export default Home;
