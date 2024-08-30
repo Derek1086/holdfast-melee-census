@@ -131,6 +131,10 @@ const Home: React.FC<HomeProps> = ({ players }) => {
       setZoomLevel(0.55);
       setOffset({ x: -117, y: -240 });
     }
+    if (regionalPlayers) {
+      setSearchedPlayers(regionalPlayers?.players);
+      setFilteredPlayers("");
+    }
   };
 
   const mouseDownHandler = (

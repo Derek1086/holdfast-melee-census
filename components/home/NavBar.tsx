@@ -49,7 +49,6 @@ const NavBar: React.FC<NavBarProps> = ({
     value: string
   ) => {
     setFilteredPlayers(value);
-    setLocation("");
     searchHandler(value);
   };
 
