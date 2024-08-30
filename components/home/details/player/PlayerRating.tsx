@@ -150,7 +150,9 @@ const PlayerRating: React.FC<PlayerRatingProps> = ({
     <Typography variant="body2" style={{ marginTop: "15px" }}>
       {player.rating === ""
         ? "Impact Rating: N/A"
-        : `Impact Rating: ${player.rating} (#${ranking})`}
+        : `Impact Rating: ${player.rating} ${
+            ranking === 0 ? "" : `(#${ranking})`
+          }`}
     </Typography>
   );
 };

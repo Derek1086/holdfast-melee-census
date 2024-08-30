@@ -85,7 +85,6 @@ const NavBar: React.FC<NavBarProps> = ({
             <Paper
               component="form"
               sx={{
-                p: "2px 4px",
                 display: "flex",
                 alignItems: "center",
                 width: 400,

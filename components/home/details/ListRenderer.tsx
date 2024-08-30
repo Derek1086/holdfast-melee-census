@@ -47,7 +47,14 @@ const ListRenderer: React.FC<ListRendererProps> = ({
 
   useEffect(() => {
     if (searchedPlayers && location === "") {
-      setSortedPlayers(searchedPlayers);
+      const sortedSearchResults = searchedPlayers.sort(
+        (a: Player, b: Player) => {
+          const ratingA = a.rating ? Number(a.rating) : 0;
+          const ratingB = b.rating ? Number(b.rating) : 0;
+          return ratingB - ratingA;
+        }
+      );
+      setSortedPlayers(sortedSearchResults);
     } else if (playersInLocation && location !== "") {
       setSortedPlayers(playersInLocation);
     }

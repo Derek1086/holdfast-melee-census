@@ -52,6 +52,7 @@ const Home: React.FC<HomeProps> = ({ players }) => {
   );
 
   useEffect(() => {
+    setRanking(0);
     if (viewingPlayer) {
       setRanking(
         sortedPlayersByRating.findIndex(
@@ -75,12 +76,9 @@ const Home: React.FC<HomeProps> = ({ players }) => {
 
       setSortedPlayersByRating(sortedPlayers);
       setSearchedPlayers(initialSearchedPlayers);
+
       setPlayersInLocation(
-        regionalPlayers
-          ? regionalPlayers.players.filter(
-              (player) => player.state === location
-            )
-          : []
+        sortedPlayers.filter((player) => player.state === location)
       );
     }
     setLoading(false);
@@ -193,8 +191,8 @@ const Home: React.FC<HomeProps> = ({ players }) => {
   const updateColorHandler = (path: string) => {
     let count = 0;
 
-    const potentialPlayers = regionalPlayers
-      ? regionalPlayers.players.filter((player) => player.state === path)
+    const potentialPlayers = searchedPlayers
+      ? searchedPlayers.filter((player) => player.state === path)
       : [];
 
     if (potentialPlayers.length > 0) {

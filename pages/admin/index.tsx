@@ -12,6 +12,9 @@ import UserForm from "../../components/admin/UserForm";
 import PlayerListLoader from "../../components/loaders/PlayerListLoader";
 import PlayerBio from "../../components/home/details/player/PlayerBio";
 import AdminLogin from "../../components/admin/AdminLogin";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import PlayerItem from "../../components/home/details/player/PlayerItem";
 
 interface AdminProps {
   players: RegionData[];
@@ -40,6 +43,18 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
+  const [naPlayers, setNaPlayers] = useState<Player[]>([]);
+  const [euPlayers, setEuPlayers] = useState<Player[]>([]);
+
+  useEffect(() => {
+    const naRegion = players.find((regionData) => regionData.Region === "NA");
+    const euRegion = players.find((regionData) => regionData.Region === "EU");
+
+    if (naRegion && euRegion) {
+      setNaPlayers(naRegion.players);
+      setEuPlayers(euRegion.players);
+    }
+  }, [players]);
 
   const updateRegionHandler = () => {
     setRegion((prevRegion) => (prevRegion === "NA" ? "EU" : "NA"));
@@ -84,7 +99,14 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
           player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           player.regiment.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredPlayers(searchResults);
+
+      const sortedSearchResults = searchResults.sort((a: Player, b: Player) => {
+        const ratingA = a.rating ? Number(a.rating) : 0;
+        const ratingB = b.rating ? Number(b.rating) : 0;
+        return ratingB - ratingA;
+      });
+
+      setFilteredPlayers(sortedSearchResults);
     }
   }, [players, searchQuery, region]);
 
@@ -170,13 +192,42 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
     }
   };
 
+  const calculateRatings = (players: Player[]) => {
+    const ratedPlayers = players.filter(
+      (player) => player.rating && Number(player.rating) > 0
+    );
+
+    const totalRating = ratedPlayers.reduce(
+      (sum, player) => sum + Number(player.rating),
+      0
+    );
+
+    const averageRating =
+      ratedPlayers.length > 0
+        ? (totalRating / ratedPlayers.length).toFixed(2)
+        : "0.00";
+
+    const bestPlayer = ratedPlayers.reduce((best, player) => {
+      return Number(player.rating) > Number(best.rating) ? player : best;
+    }, ratedPlayers[0]);
+
+    const worstPlayer = ratedPlayers.reduce((worst, player) => {
+      return Number(player.rating) < Number(worst.rating) ? player : worst;
+    }, ratedPlayers[0]);
+
+    return { averageRating, bestPlayer, worstPlayer };
+  };
+
+  const naRatings = calculateRatings(naPlayers);
+  const euRatings = calculateRatings(euPlayers);
+  const overallRatings = calculateRatings([...naPlayers, ...euPlayers]);
+
   return (
     <>
       <Head>
         <title>Admin Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       {loadingAuth ? (
         <></>
       ) : !authenticated ? (
@@ -185,7 +236,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
           setAuthenticated={setAuthenticated}
         />
       ) : (
-        <div className="p-4">
+        <div className="p-4 block md:flex gap-4">
           <PlayerBio
             viewingPlayer={viewingPlayer}
             setViewingPlayer={setViewingPlayer}
@@ -247,6 +298,199 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 loading={loading}
               />
             )}
+          </div>
+          <div className="w-full md:w-1/2 md:mt-0 mt-4">
+            <Card
+              sx={{
+                width: "100%",
+                height: "100%",
+                padding: "15px",
+              }}
+            >
+              <div className="h-1/3 w-full">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  textAlign={"center"}
+                >
+                  Total Players: {naPlayers.length + euPlayers.length}
+                </Typography>
+                <div className="h-full w-full flex mt-2">
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Average Impact
+                    </Typography>
+                    <div className="mt-6" />
+                    <Typography
+                      variant="h6"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      {overallRatings.averageRating}
+                    </Typography>
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Best Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={overallRatings.bestPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Worst Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={overallRatings.worstPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="h-1/3 w-full">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  textAlign={"center"}
+                >
+                  NA Players: {naPlayers.length}
+                </Typography>
+                <div className="h-full w-full flex mt-2">
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Average Impact
+                    </Typography>
+                    <div className="mt-6" />
+                    <Typography
+                      variant="h6"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      {naRatings.averageRating}
+                    </Typography>
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Best Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={naRatings.bestPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Worst Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={naRatings.worstPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="h-1/3 w-full">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  textAlign={"center"}
+                >
+                  EU Players: {euPlayers.length}
+                </Typography>
+                <div className="h-full w-full flex mt-2">
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Average Impact
+                    </Typography>
+                    <div className="mt-6" />
+                    <Typography
+                      variant="h6"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      {euRatings.averageRating}
+                    </Typography>
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Best Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={euRatings.bestPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                  <div className="w-1/3">
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      component="div"
+                      textAlign={"center"}
+                    >
+                      Worst Player
+                    </Typography>
+                    <div className="mt-2" />
+                    <PlayerItem
+                      player={euRatings.worstPlayer}
+                      setViewingPlayer={setViewingPlayer}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       )}

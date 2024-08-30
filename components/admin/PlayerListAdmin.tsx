@@ -41,6 +41,7 @@ const PlayerListAdmin: React.FC<PlayerListAdminProps> = ({
         width: "100%",
         bgcolor: "background.paper",
         overflow: "auto",
+        minHeight: "75vh",
         maxHeight: "75vh",
         marginTop: "15px",
       }}
