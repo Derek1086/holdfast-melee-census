@@ -362,12 +362,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 padding: "15px",
               }}
             >
-              <div className="h-1/4 w-full">
+              <div className="w-full mb-2">
                 <Typography
                   variant="h6"
                   noWrap
                   component="div"
                   textAlign={"center"}
+                  color={"secondary"}
                 >
                   Total Players: {naPlayers.length + euPlayers.length}
                 </Typography>
@@ -378,6 +379,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Average Impact
                     </Typography>
@@ -397,6 +399,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Best Player
                     </Typography>
@@ -412,6 +415,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Worst Player
                     </Typography>
@@ -424,12 +428,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 </div>
               </div>
               <Divider />
-              <div className="h-1/4 w-full mt-4">
+              <div className="w-full mt-4 mb-2">
                 <Typography
                   variant="h6"
                   noWrap
                   component="div"
                   textAlign={"center"}
+                  color={"secondary"}
                 >
                   NA Players: {naPlayers.length}
                 </Typography>
@@ -440,6 +445,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Average Impact
                     </Typography>
@@ -459,6 +465,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Best Player
                     </Typography>
@@ -474,6 +481,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Worst Player
                     </Typography>
@@ -486,12 +494,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 </div>
               </div>
               <Divider />
-              <div className="h-1/4 w-full mt-4">
+              <div className="w-full mt-4 mb-2">
                 <Typography
                   variant="h6"
                   noWrap
                   component="div"
                   textAlign={"center"}
+                  color={"secondary"}
                 >
                   EU Players: {euPlayers.length}
                 </Typography>
@@ -502,6 +511,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Average Impact
                     </Typography>
@@ -521,6 +531,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Best Player
                     </Typography>
@@ -536,6 +547,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       noWrap
                       component="div"
                       textAlign={"center"}
+                      color={"text.secondary"}
                     >
                       Worst Player
                     </Typography>
@@ -548,13 +560,14 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 </div>
               </div>
               <Divider />
-              <div className="h-1/5 w-full flex flex-col md:flex-row md:gap-0 gap-4 mt-4">
-                <div className="md:w-1/2 w-full">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div className="w-full">
                   <Typography
                     variant="body1"
                     noWrap
                     component="div"
                     textAlign={"center"}
+                    color={"text.secondary"}
                   >
                     Best State
                   </Typography>
@@ -569,12 +582,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     {naStateRatings.highestAvg.toFixed(2)})
                   </Typography>
                 </div>
-                <div className="md:w-1/2 w-full">
+                <div className="w-full">
                   <Typography
                     variant="body1"
                     noWrap
                     component="div"
                     textAlign={"center"}
+                    color={"text.secondary"}
                   >
                     Worst State
                   </Typography>
@@ -589,12 +603,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     {naStateRatings.lowestAvg.toFixed(2)})
                   </Typography>
                 </div>
-                <div className="md:w-1/2 w-full">
+                <div className="w-full">
                   <Typography
                     variant="body1"
                     noWrap
                     component="div"
                     textAlign={"center"}
+                    color={"text.secondary"}
                   >
                     Best Country
                   </Typography>
@@ -609,12 +624,13 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     {euStateRatings.highestAvg.toFixed(2)})
                   </Typography>
                 </div>
-                <div className="md:w-1/2 w-full">
+                <div className="w-full">
                   <Typography
                     variant="body1"
                     noWrap
                     component="div"
                     textAlign={"center"}
+                    color={"text.secondary"}
                   >
                     Worst Country
                   </Typography>
