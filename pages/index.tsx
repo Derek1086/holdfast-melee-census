@@ -134,6 +134,7 @@ const Home: React.FC<HomeProps> = ({ players }) => {
     if (regionalPlayers) {
       setSearchedPlayers(regionalPlayers?.players);
       setFilteredPlayers("");
+      setLocation("");
     }
   };
 
