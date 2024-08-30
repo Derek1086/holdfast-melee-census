@@ -15,6 +15,11 @@ import AdminLogin from "../../components/admin/AdminLogin";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import PlayerItem from "../../components/home/details/player/PlayerItem";
+import {
+  NAREGIONS,
+  EUREGIONS,
+} from "../../components/home/details/location/LocationRenderer";
+import Divider from "@mui/material/Divider";
 
 interface AdminProps {
   players: RegionData[];
@@ -222,6 +227,56 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
   const euRatings = calculateRatings(euPlayers);
   const overallRatings = calculateRatings([...naPlayers, ...euPlayers]);
 
+  const calculateStateRatings = (players: Player[]) => {
+    const stateRatings: { [state: string]: { total: number; count: number } } =
+      {};
+
+    players.forEach((player) => {
+      if (player.rating && Number(player.rating) > 0) {
+        if (!stateRatings[player.state]) {
+          stateRatings[player.state] = { total: 0, count: 0 };
+        }
+        stateRatings[player.state].total += Number(player.rating);
+        stateRatings[player.state].count += 1;
+      }
+    });
+
+    let highestAvgState = "";
+    let lowestAvgState = "";
+    let highestAvg = 0;
+    let lowestAvg = Infinity;
+
+    Object.keys(stateRatings).forEach((state) => {
+      const avg = stateRatings[state].total / stateRatings[state].count;
+      if (avg > highestAvg) {
+        highestAvg = avg;
+        highestAvgState = state;
+      }
+      if (avg < lowestAvg) {
+        lowestAvg = avg;
+        lowestAvgState = state;
+      }
+    });
+
+    return { highestAvgState, highestAvg, lowestAvgState, lowestAvg };
+  };
+
+  const naStateRatings = calculateStateRatings(naPlayers);
+  const euStateRatings = calculateStateRatings(euPlayers);
+  // const overallStateRatings = calculateStateRatings([
+  //   ...naPlayers,
+  //   ...euPlayers,
+  // ]);
+
+  function getFullName(
+    abbreviation: string,
+    region: string
+  ): string | undefined {
+    const regions = region === "EU" ? EUREGIONS : NAREGIONS;
+    const title = regions.find(([fullName, abbr]) => abbr === abbreviation);
+    return title ? title[0] : undefined;
+  }
+
   return (
     <>
       <Head>
@@ -307,7 +362,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 padding: "15px",
               }}
             >
-              <div className="h-1/3 w-full">
+              <div className="h-1/4 w-full">
                 <Typography
                   variant="h6"
                   noWrap
@@ -316,8 +371,8 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 >
                   Total Players: {naPlayers.length + euPlayers.length}
                 </Typography>
-                <div className="h-full w-full flex mt-2">
-                  <div className="w-1/3">
+                <div className="h-full w-full block md:flex mt-2">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -326,7 +381,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     >
                       Average Impact
                     </Typography>
-                    <div className="mt-6" />
+                    <div className="md:mt-6 mt-2" />
                     <Typography
                       variant="h6"
                       noWrap
@@ -336,7 +391,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       {overallRatings.averageRating}
                     </Typography>
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full md:mt-0 mt-2">
                     <Typography
                       variant="body1"
                       noWrap
@@ -351,7 +406,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       setViewingPlayer={setViewingPlayer}
                     />
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -368,7 +423,8 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                   </div>
                 </div>
               </div>
-              <div className="h-1/3 w-full">
+              <Divider />
+              <div className="h-1/4 w-full mt-4">
                 <Typography
                   variant="h6"
                   noWrap
@@ -377,8 +433,8 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 >
                   NA Players: {naPlayers.length}
                 </Typography>
-                <div className="h-full w-full flex mt-2">
-                  <div className="w-1/3">
+                <div className="h-full w-full block md:flex mt-2">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -387,7 +443,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     >
                       Average Impact
                     </Typography>
-                    <div className="mt-6" />
+                    <div className="md:mt-6 mt-2" />
                     <Typography
                       variant="h6"
                       noWrap
@@ -397,7 +453,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       {naRatings.averageRating}
                     </Typography>
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full md:mt-0 mt-2">
                     <Typography
                       variant="body1"
                       noWrap
@@ -412,7 +468,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       setViewingPlayer={setViewingPlayer}
                     />
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -429,7 +485,8 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                   </div>
                 </div>
               </div>
-              <div className="h-1/3 w-full">
+              <Divider />
+              <div className="h-1/4 w-full mt-4">
                 <Typography
                   variant="h6"
                   noWrap
@@ -438,8 +495,8 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                 >
                   EU Players: {euPlayers.length}
                 </Typography>
-                <div className="h-full w-full flex mt-2">
-                  <div className="w-1/3">
+                <div className="h-full w-full block md:flex mt-2">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -448,7 +505,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                     >
                       Average Impact
                     </Typography>
-                    <div className="mt-6" />
+                    <div className="md:mt-6 mt-2" />
                     <Typography
                       variant="h6"
                       noWrap
@@ -458,7 +515,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       {euRatings.averageRating}
                     </Typography>
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full md:mt-0 mt-2">
                     <Typography
                       variant="body1"
                       noWrap
@@ -473,7 +530,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       setViewingPlayer={setViewingPlayer}
                     />
                   </div>
-                  <div className="w-1/3">
+                  <div className="md:w-1/3 w-full">
                     <Typography
                       variant="body1"
                       noWrap
@@ -488,6 +545,89 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
                       setViewingPlayer={setViewingPlayer}
                     />
                   </div>
+                </div>
+              </div>
+              <Divider />
+              <div className="h-1/5 w-full flex flex-col md:flex-row md:gap-0 gap-4 mt-4">
+                <div className="md:w-1/2 w-full">
+                  <Typography
+                    variant="body1"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    Best State
+                  </Typography>
+                  <div className="mt-2" />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    {getFullName(naStateRatings.highestAvgState, "NA")} (
+                    {naStateRatings.highestAvg.toFixed(2)})
+                  </Typography>
+                </div>
+                <div className="md:w-1/2 w-full">
+                  <Typography
+                    variant="body1"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    Worst State
+                  </Typography>
+                  <div className="mt-2" />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    {getFullName(naStateRatings.lowestAvgState, "NA")} (
+                    {naStateRatings.lowestAvg.toFixed(2)})
+                  </Typography>
+                </div>
+                <div className="md:w-1/2 w-full">
+                  <Typography
+                    variant="body1"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    Best Country
+                  </Typography>
+                  <div className="mt-2" />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    {getFullName(euStateRatings.highestAvgState, "EU")} (
+                    {euStateRatings.highestAvg.toFixed(2)})
+                  </Typography>
+                </div>
+                <div className="md:w-1/2 w-full">
+                  <Typography
+                    variant="body1"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    Worst Country
+                  </Typography>
+                  <div className="mt-2" />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    textAlign={"center"}
+                  >
+                    {getFullName(euStateRatings.lowestAvgState, "EU")} (
+                    {euStateRatings.lowestAvg.toFixed(2)})
+                  </Typography>
                 </div>
               </div>
             </Card>
