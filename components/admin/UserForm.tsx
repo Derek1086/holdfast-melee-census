@@ -15,7 +15,7 @@ import {
   NAREGIONS,
   EUREGIONS,
 } from "../home/details/location/LocationRenderer";
-import { NAREGIMENTS, EUREGIMENTS } from "../regiments/RegimentRegistry";
+import { HOLDFASTREGIMENTS } from "../regiments/RegimentRegistry";
 import { UpdatedData } from "../../pages/admin";
 
 export const modalStyle = {
@@ -70,6 +70,13 @@ const UserForm: React.FC<UserFormProps> = ({
   });
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const NAREGIMENTS = HOLDFASTREGIMENTS.filter(
+    (regiment) => regiment.region === "NA" || regiment.region === "GLOBAL"
+  );
+  const EUREGIMENTS = HOLDFASTREGIMENTS.filter(
+    (regiment) => regiment.region === "EU" || regiment.region === "GLOBAL"
+  );
 
   useEffect(() => {
     // Check if required fields are valid
