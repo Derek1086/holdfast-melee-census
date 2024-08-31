@@ -142,7 +142,7 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({
         </div>
         <Divider />
         {/* NA REGION */}
-        <div className="w-full mt-4 mb-2">
+        <div className="w-full mt-4 mb-4">
           <Typography
             variant="h6"
             noWrap
@@ -273,7 +273,7 @@ const PlayerStats: React.FC<PlayerStatsProps> = ({
         </div>
         <Divider />
         {/* EU REGION */}
-        <div className="w-full mt-4 mb-2">
+        <div className="w-full mt-4">
           <Typography
             variant="h6"
             noWrap
