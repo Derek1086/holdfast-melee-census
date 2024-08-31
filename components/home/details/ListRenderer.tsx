@@ -1,5 +1,4 @@
 "use client";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import LocationRenderer from "./location/LocationRenderer";
@@ -8,6 +7,11 @@ import { useRouter } from "next/router";
 import { Player } from "../../../pages/api/playerFetching";
 import { useEffect, useState } from "react";
 import { Divider } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import FlagIcon from "@mui/icons-material/Flag";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import Button from "@mui/material/Button";
 
 export const getAverageRating = (sortedPlayers: Player[]) => {
   if (!sortedPlayers || sortedPlayers.length === 0) {
@@ -62,28 +66,89 @@ const ListRenderer: React.FC<ListRendererProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="w-full flex gap-4">
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ width: "50%" }}
-          onClick={() => {
-            router.push("/regiments");
-          }}
-        >
-          Regiments
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ width: "50%" }}
-          onClick={() => {
-            router.push("/players");
-          }}
-        >
-          Players
-        </Button>
+      {/* Page Navigation */}
+      <div className="w-full flex gap-2">
+        <div className="w-1/3 flex justify-center">
+          <div className="hidden sm:block w-full">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                router.push("/regiments");
+              }}
+              startIcon={<FlagIcon />}
+              fullWidth
+            >
+              Regiments
+            </Button>
+          </div>
+          <div className="block sm:hidden">
+            <IconButton
+              color="secondary"
+              size="large"
+              onClick={() => {
+                router.push("/regiments");
+              }}
+            >
+              <FlagIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="w-1/3 flex justify-center">
+          <div className="hidden sm:block w-full">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                router.push("/players");
+              }}
+              startIcon={<PeopleAltIcon />}
+              fullWidth
+            >
+              Players
+            </Button>
+          </div>
+          <div className="block sm:hidden">
+            <IconButton
+              color="secondary"
+              size="large"
+              onClick={() => {
+                router.push("/players");
+              }}
+            >
+              <PeopleAltIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="w-1/3 flex justify-center">
+          <div className="hidden sm:block w-full">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                router.push("/leaderboards");
+              }}
+              startIcon={<LeaderboardIcon />}
+              fullWidth
+            >
+              Leaderboards
+            </Button>
+          </div>
+          <div className="block sm:hidden">
+            <IconButton
+              color="secondary"
+              size="large"
+              onClick={() => {
+                router.push("/leaderboards");
+              }}
+            >
+              <LeaderboardIcon />
+            </IconButton>
+          </div>
+        </div>
       </div>
+
+      {/* Player List */}
       <Card
         style={{
           width: "100%",

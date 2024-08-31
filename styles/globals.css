@@ -26,7 +26,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-html {
+/* html {
   scrollbar-width: normal;
   scrollbar-color: #272727 black;
 }
@@ -45,10 +45,34 @@ html::-webkit-scrollbar-thumb:hover {
 
 html::-webkit-scrollbar-track {
   background-color: #36393f;
-}
+} */
 
 body {
   margin: 0;
   padding: 0;
   background-color: black;
+}
+
+/* For WebKit browsers like Chrome, Safari, and newer versions of Edge */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounds the corners of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+.scrollable-container {
+  scrollbar-width: thin; /* Width of the scrollbar */
+  scrollbar-color: #555 #1e1e1e; /* Thumb color and track color */
 }
