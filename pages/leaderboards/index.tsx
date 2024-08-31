@@ -1,27 +1,46 @@
 import { GetServerSideProps } from "next";
 import { fetchPlayersData, RegionData } from "../api/playerFetching";
 import { useState, useEffect } from "react";
-import { Player } from "../api/playerFetching";
 import FlagIcon from "@mui/icons-material/Flag";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import Button from "@mui/material/Button";
 import MapIcon from "@mui/icons-material/Map";
 import Head from "next/head";
 import PlayerLbTable from "../../components/leaderboard/PlayerLbTable";
+import RegimentLbTable from "../../components/leaderboard/RegimentLbTable";
+import { HOLDFASTREGIMENTS } from "../../components/regiments/RegimentRegistry";
+import { Regiment } from "../regiments";
 
 interface PlayersProps {
   players: RegionData[];
 }
 
-interface PlayerWithRegion extends Player {
+export type LBPlayer = {
+  bio: string;
+  city: string;
+  id: string;
+  name: string;
+  rating: string;
+  regiment: string;
   region: string;
-}
+  state: string;
+};
+
+export type LBRegiment = {
+  name: string;
+  tag: string;
+  count: number;
+  region: string;
+  averageImpact: number;
+};
 
 const Leaderboards: React.FC<PlayersProps> = ({ players }) => {
-  const [sortedPlayers, setSortedPlayers] = useState<PlayerWithRegion[]>([]);
+  const [sortedPlayers, setSortedPlayers] = useState<LBPlayer[]>([]);
+  const [sortedRegiments, setSortedRegiments] = useState<LBRegiment[]>([]);
   const [view, setView] = useState<string>("Players");
 
   useEffect(() => {
+    // PLAYERS
     const naRegion = players.find((regionData) => regionData.Region === "NA");
     const euRegion = players.find((regionData) => regionData.Region === "EU");
 
@@ -43,6 +62,40 @@ const Leaderboards: React.FC<PlayersProps> = ({ players }) => {
       .sort((a, b) => Number(b.rating) - Number(a.rating));
 
     setSortedPlayers(sorted);
+
+    // REGIMENTS
+    const regimentStats: {
+      [key: string]: { count: number; totalRating: number };
+    } = HOLDFASTREGIMENTS.reduce((acc: any, regiment: Regiment) => {
+      acc[regiment.tag] = { count: 0, totalRating: 0 };
+      return acc;
+    }, {});
+
+    combinedPlayers.forEach((player) => {
+      const regiment = regimentStats[player.regiment];
+      if (regiment) {
+        regiment.count += 1;
+        if (player.rating !== "") {
+          regiment.totalRating += Number(player.rating);
+        }
+      }
+    });
+
+    const sortedRegiments = HOLDFASTREGIMENTS.map((regiment: Regiment) => {
+      const stats = regimentStats[regiment.tag] || { count: 0, totalRating: 0 };
+      const averageImpact =
+        stats.count > 0 ? stats.totalRating / stats.count : 0;
+      return {
+        name: regiment.name,
+        tag: regiment.tag,
+        count: stats.count,
+        region: regiment.region,
+        averageImpact,
+      };
+    }).sort((a, b) => b.averageImpact - a.averageImpact);
+
+    setSortedRegiments(sortedRegiments);
+    console.log(sortedRegiments);
   }, [players]);
 
   return (
@@ -86,6 +139,9 @@ const Leaderboards: React.FC<PlayersProps> = ({ players }) => {
           </Button>
         </div>
         {view === "Players" && <PlayerLbTable sortedPlayers={sortedPlayers} />}
+        {view === "Regiments" && (
+          <RegimentLbTable sortedRegiments={sortedRegiments} />
+        )}
       </div>
     </>
   );

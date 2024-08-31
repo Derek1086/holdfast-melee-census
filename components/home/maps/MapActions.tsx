@@ -43,16 +43,16 @@ const MapActions: React.FC<MapActionsProps> = ({
           Reset
         </Button>
       </div>
-      <div className={classes.legend}>
+      <div className={`flex items-center  ${classes.legend}`}>
         <Card
           sx={{
-            height: "100%",
+            height: "80%",
             width: "100%",
             background:
               "linear-gradient(to right, #ffffff, #fad2ff, #f6b2ff, #f08efd, #ed64ff, #e83cff, #e51eff, #e100ff, #de01fd)",
           }}
         >
-          <div className="flex justify-between items-center p-2 text-black">
+          <div className="flex justify-between items-center p-2 text-black h-full">
             <span>0</span>
             <span>8+</span>
           </div>

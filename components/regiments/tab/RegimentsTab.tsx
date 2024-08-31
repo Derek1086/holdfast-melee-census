@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import RegimentList from "./RegimentList";
 import { Regiment } from "../../../pages/regiments";
 import SearchFilter from "../SearchFilter";
-import { NAREGIMENTS, EUREGIMENTS } from "../RegimentRegistry";
+import { HOLDFASTREGIMENTS } from "../RegimentRegistry";
 
 import classes from "../Regiments.module.css";
 
@@ -17,11 +17,17 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
   const [expanded, setExpanded] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredRegiments, setFilteredRegiments] = useState<Regiment[]>([]);
-
-  const regiments = region === "NA" ? NAREGIMENTS : EUREGIMENTS;
+  const [regiments, setRegiments] = useState<Regiment[]>([]);
 
   useEffect(() => {
-    setSearchQuery("");
+    const NAREGIMENTS = HOLDFASTREGIMENTS.filter(
+      (regiment) => regiment.region === "NA" || regiment.region === "GLOBAL"
+    );
+    const EUREGIMENTS = HOLDFASTREGIMENTS.filter(
+      (regiment) => regiment.region === "EU" || regiment.region === "GLOBAL"
+    );
+
+    setRegiments(region === "NA" ? NAREGIMENTS : EUREGIMENTS);
   }, [region]);
 
   useEffect(() => {
@@ -31,7 +37,7 @@ const RegimentsTab: React.FC<RegimentsTabProps> = ({ region, setRegiment }) => {
         regiment.tag.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredRegiments(filtered);
-  }, [searchQuery, region]);
+  }, [searchQuery, regiments]);
 
   return (
     <div className={classes.regiments}>

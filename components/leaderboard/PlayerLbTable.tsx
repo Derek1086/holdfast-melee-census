@@ -9,9 +9,10 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import findIcon from "../home/details/player/PlayerIcon";
 import Image from "next/image";
+import { LBPlayer } from "../../pages/leaderboards";
 
 interface PlayerLbTableProps {
-  sortedPlayers: any[];
+  sortedPlayers: LBPlayer[];
 }
 
 const PlayerLbTable: React.FC<PlayerLbTableProps> = ({ sortedPlayers }) => {

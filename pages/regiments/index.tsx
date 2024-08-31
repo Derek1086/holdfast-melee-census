@@ -13,6 +13,7 @@ export type Regiment = {
   name: string;
   tag: string;
   description: string[];
+  region: string;
 };
 
 interface PlayersProps {
