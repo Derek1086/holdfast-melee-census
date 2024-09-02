@@ -79,7 +79,6 @@ const UserForm: React.FC<UserFormProps> = ({
   );
 
   useEffect(() => {
-    // Check if required fields are valid
     const isValid =
       region.trim() !== "" &&
       id.trim() !== "" &&
@@ -107,7 +106,6 @@ const UserForm: React.FC<UserFormProps> = ({
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Reset errors
     setErrors({
       region: !region,
       id: !id,
@@ -116,7 +114,6 @@ const UserForm: React.FC<UserFormProps> = ({
       stateCountry: !stateCountry,
     });
 
-    // Check for errors
     if (!region || !id || !name || !stateCountry) {
       return;
     }
@@ -237,7 +234,6 @@ const UserForm: React.FC<UserFormProps> = ({
             onChange={(e) => setId(e.target.value)}
             error={errors.id}
             helperText={errors.id ? "ID is required." : ""}
-            disabled={editingPlayer ? true : false}
           />
           <TextField
             required
@@ -307,6 +303,7 @@ const UserForm: React.FC<UserFormProps> = ({
               error={errors.stateCountry}
               displayEmpty
               color="secondary"
+              required
             >
               {NAREGIONS.map(([state, abbreviation]) => (
                 <MenuItem key={state} value={abbreviation}>
@@ -322,6 +319,7 @@ const UserForm: React.FC<UserFormProps> = ({
               error={errors.stateCountry}
               displayEmpty
               color="secondary"
+              required
             >
               {EUREGIONS.map(([state, abbreviation]) => (
                 <MenuItem key={state} value={abbreviation}>
@@ -368,7 +366,7 @@ const UserForm: React.FC<UserFormProps> = ({
                 color="secondary"
                 type="submit"
                 size="large"
-                disabled={isButtonDisabled} // Disable button based on validation
+                disabled={isButtonDisabled}
               >
                 {editingPlayer ? "Update" : "Add Player"}
               </Button>

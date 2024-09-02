@@ -203,113 +203,6 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
     }
   };
 
-  const calculateRatings = (players: Player[]) => {
-    const ratedPlayers = players.filter(
-      (player) => player.rating && Number(player.rating) > 0
-    );
-
-    const totalRating = ratedPlayers.reduce(
-      (sum, player) => sum + Number(player.rating),
-      0
-    );
-
-    const averageRating =
-      ratedPlayers.length > 0
-        ? (totalRating / ratedPlayers.length).toFixed(2)
-        : "0.00";
-
-    const bestPlayer = ratedPlayers.reduce((best, player) => {
-      return Number(player.rating) > Number(best.rating) ? player : best;
-    }, ratedPlayers[0]);
-
-    const worstPlayer = ratedPlayers.reduce((worst, player) => {
-      return Number(player.rating) < Number(worst.rating) ? player : worst;
-    }, ratedPlayers[0]);
-
-    return { averageRating, bestPlayer, worstPlayer };
-  };
-
-  const naRatings = calculateRatings(naPlayers);
-  const euRatings = calculateRatings(euPlayers);
-  const overallRatings = calculateRatings([...naPlayers, ...euPlayers]);
-
-  const calculateStateRatings = (players: Player[]) => {
-    const stateRatings: { [state: string]: { total: number; count: number } } =
-      {};
-
-    players.forEach((player) => {
-      if (player.rating && Number(player.rating) > 0) {
-        if (!stateRatings[player.state]) {
-          stateRatings[player.state] = { total: 0, count: 0 };
-        }
-        stateRatings[player.state].total += Number(player.rating);
-        stateRatings[player.state].count += 1;
-      }
-    });
-
-    let highestAvgState = "";
-    let lowestAvgState = "";
-    let highestAvg = 0;
-    let lowestAvg = Infinity;
-
-    Object.keys(stateRatings).forEach((state) => {
-      const avg = stateRatings[state].total / stateRatings[state].count;
-      if (avg > highestAvg) {
-        highestAvg = avg;
-        highestAvgState = state;
-      }
-      if (avg < lowestAvg) {
-        lowestAvg = avg;
-        lowestAvgState = state;
-      }
-    });
-
-    return { highestAvgState, highestAvg, lowestAvgState, lowestAvg };
-  };
-
-  const naStateRatings = calculateStateRatings(naPlayers);
-  const euStateRatings = calculateStateRatings(euPlayers);
-  // const overallStateRatings = calculateStateRatings([
-  //   ...naPlayers,
-  //   ...euPlayers,
-  // ]);
-
-  const calculateMostPlayersState = (players: Player[]) => {
-    const stateCounts: { [state: string]: number } = {};
-
-    players.forEach((player) => {
-      if (player.state) {
-        if (!stateCounts[player.state]) {
-          stateCounts[player.state] = 0;
-        }
-        stateCounts[player.state] += 1;
-      }
-    });
-
-    let mostPlayersState = "";
-    let maxCount = 0;
-
-    Object.keys(stateCounts).forEach((state) => {
-      if (stateCounts[state] > maxCount) {
-        maxCount = stateCounts[state];
-        mostPlayersState = state;
-      }
-    });
-
-    return { mostPlayersState, maxCount };
-  };
-
-  const naMostPlayersState = calculateMostPlayersState(naPlayers);
-  const euMostPlayersState = calculateMostPlayersState(euPlayers);
-  const naMostPlayersStateFullName = getFullName(
-    naMostPlayersState.mostPlayersState,
-    "NA"
-  );
-  const euMostPlayersStateFullName = getFullName(
-    euMostPlayersState.mostPlayersState,
-    "EU"
-  );
-
   return (
     <>
       <Head>
@@ -392,16 +285,7 @@ const Admin: React.FC<AdminProps> = ({ players }) => {
           <PlayerStats
             naPlayers={naPlayers}
             euPlayers={euPlayers}
-            overallRatings={overallRatings}
-            naRatings={naRatings}
-            euRatings={euRatings}
             setViewingPlayer={setViewingPlayer}
-            naStateRatings={naStateRatings}
-            euStateRatings={euStateRatings}
-            naMostPlayersState={naMostPlayersState}
-            euMostPlayersState={euMostPlayersState}
-            naMostPlayersStateFullName={naMostPlayersStateFullName}
-            euMostPlayersStateFullName={euMostPlayersStateFullName}
           />
         </div>
       )}

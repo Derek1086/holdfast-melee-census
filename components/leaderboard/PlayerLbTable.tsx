@@ -9,13 +9,24 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import findIcon from "../home/details/player/PlayerIcon";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { LBPlayer } from "../../pages/leaderboards";
 
 interface PlayerLbTableProps {
-  sortedPlayers: LBPlayer[];
+  combinedPlayers: LBPlayer[];
 }
 
-const PlayerLbTable: React.FC<PlayerLbTableProps> = ({ sortedPlayers }) => {
+const PlayerLbTable: React.FC<PlayerLbTableProps> = ({ combinedPlayers }) => {
+  const [sortedPlayers, setSortedPlayers] = useState<LBPlayer[]>([]);
+
+  useEffect(() => {
+    const sorted = combinedPlayers
+      .filter((player) => player.rating !== "" && Number(player.rating) > 0)
+      .sort((a, b) => Number(b.rating) - Number(a.rating));
+
+    setSortedPlayers(sorted);
+  }, [combinedPlayers]);
+
   return (
     <>
       <Typography

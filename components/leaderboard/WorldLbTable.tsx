@@ -6,62 +6,61 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import RegimentIcon from "../regiments/RegimentIcon";
-import { useState, useEffect } from "react";
 import { LBPlayer } from "../../pages/leaderboards";
-import { HOLDFASTREGIMENTS } from "../regiments/RegimentRegistry";
-import { Regiment } from "../../pages/regiments";
+import { useState, useEffect } from "react";
+import {
+  NAREGIONS,
+  EUREGIONS,
+} from "../home/details/location/LocationRenderer";
 
-type LBRegiment = {
+type LBWorld = {
   name: string;
-  tag: string;
   count: number;
-  region: string;
   averageImpact: number;
 };
 
-interface RegimentLbTableProps {
+interface WorldLbTableProps {
   combinedPlayers: LBPlayer[];
 }
 
-const RegimentLbTable: React.FC<RegimentLbTableProps> = ({
-  combinedPlayers,
-}) => {
-  const [sortedRegiments, setSortedRegiments] = useState<LBRegiment[]>([]);
+const WorldLbTable: React.FC<WorldLbTableProps> = ({ combinedPlayers }) => {
+  const [sortedStates, setSortedStates] = useState<LBWorld[]>([]);
+
+  const ALLREGIONS = [...NAREGIONS, ...EUREGIONS];
 
   useEffect(() => {
-    // REGIMENTS
-    const regimentStats: {
+    const stateStats: {
       [key: string]: { count: number; totalRating: number };
-    } = HOLDFASTREGIMENTS.reduce((acc: any, regiment: Regiment) => {
-      acc[regiment.tag] = { count: 0, totalRating: 0 };
-      return acc;
-    }, {});
+    } = {};
 
     combinedPlayers.forEach((player) => {
-      const regiment = regimentStats[player.regiment];
-      if (regiment) {
-        regiment.count += 1;
-        if (player.rating !== "" && Number(player.rating) > 0) {
-          regiment.totalRating += Number(player.rating);
-        }
+      const state = player.state;
+      if (!stateStats[state]) {
+        stateStats[state] = { count: 0, totalRating: 0 };
+      }
+      stateStats[state].count += 1;
+      if (player.rating !== "" && Number(player.rating) > 0) {
+        stateStats[state].totalRating += Number(player.rating);
       }
     });
 
-    const sortedRegiments = HOLDFASTREGIMENTS.map((regiment: Regiment) => {
-      const stats = regimentStats[regiment.tag] || { count: 0, totalRating: 0 };
-      const averageImpact =
-        stats.count > 0 ? stats.totalRating / stats.count : 0;
-      return {
-        name: regiment.name,
-        tag: regiment.tag,
-        count: stats.count,
-        region: regiment.region,
-        averageImpact,
-      };
-    }).sort((a, b) => b.averageImpact - a.averageImpact);
+    const sortedStates = Object.keys(stateStats)
+      .map((state) => {
+        const name =
+          ALLREGIONS.find((region) => region[1] === state)?.[0] || state;
+        const stats = stateStats[state];
+        const averageImpact =
+          stats.count > 0 ? stats.totalRating / stats.count : 0;
+        return {
+          name,
+          count: stats.count,
+          averageImpact,
+        };
+      })
+      .filter((state) => state.averageImpact > 0)
+      .sort((a, b) => b.averageImpact - a.averageImpact);
 
-    setSortedRegiments(sortedRegiments);
+    setSortedStates(sortedStates);
   }, [combinedPlayers]);
 
   return (
@@ -73,7 +72,7 @@ const RegimentLbTable: React.FC<RegimentLbTableProps> = ({
         textAlign={"center"}
         className="mb-4"
       >
-        Regiment Leaderboard
+        World Leaderboard
       </Typography>
       <TableContainer
         component={Paper}
@@ -102,7 +101,7 @@ const RegimentLbTable: React.FC<RegimentLbTableProps> = ({
                   color: "white",
                 }}
               >
-                Name
+                State/Country
               </TableCell>
               <TableCell
                 align="left"
@@ -127,42 +126,15 @@ const RegimentLbTable: React.FC<RegimentLbTableProps> = ({
               >
                 Members
               </TableCell>
-              <TableCell
-                style={{
-                  position: "sticky",
-                  top: 0,
-                  backgroundColor: "#1e1e1e",
-                  zIndex: 1,
-                  color: "white",
-                }}
-              >
-                Region
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRegiments.map((regiment, index) => (
-              <TableRow key={regiment.name}>
+            {sortedStates.map((state, index) => (
+              <TableRow key={state.name}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <RegimentIcon
-                    regiment={regiment.tag}
-                    height={50}
-                    width={50}
-                  />
-                  {regiment.name}
-                </TableCell>
-                <TableCell align="left">
-                  {regiment.averageImpact.toFixed(2)}
-                </TableCell>
-                <TableCell>{regiment.count}</TableCell>
-                <TableCell>{regiment.region}</TableCell>
+                <TableCell>{state.name}</TableCell>
+                <TableCell>{state.averageImpact.toFixed(2)}</TableCell>
+                <TableCell>{state.count}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -172,4 +144,4 @@ const RegimentLbTable: React.FC<RegimentLbTableProps> = ({
   );
 };
 
-export default RegimentLbTable;
+export default WorldLbTable;

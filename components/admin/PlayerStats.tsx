@@ -8,63 +8,124 @@ import { getFullName } from "../../pages/admin";
 interface PlayerStatsProps {
   naPlayers: Player[] | null;
   euPlayers: Player[] | null;
-  overallRatings: {
-    averageRating: string;
-    bestPlayer: Player;
-    worstPlayer: Player;
-  };
-  naRatings: {
-    averageRating: string;
-    bestPlayer: Player;
-    worstPlayer: Player;
-  };
-  euRatings: {
-    averageRating: string;
-    bestPlayer: Player;
-    worstPlayer: Player;
-  };
   setViewingPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
-  naStateRatings: {
-    highestAvgState: string;
-    highestAvg: number;
-    lowestAvgState: string;
-    lowestAvg: number;
-  };
-  euStateRatings: {
-    highestAvgState: string;
-    highestAvg: number;
-    lowestAvgState: string;
-    lowestAvg: number;
-  };
-  naMostPlayersState: {
-    mostPlayersState: string;
-    maxCount: number;
-  };
-  euMostPlayersState: {
-    mostPlayersState: string;
-    maxCount: number;
-  };
-  naMostPlayersStateFullName: string | undefined;
-  euMostPlayersStateFullName: string | undefined;
 }
 
 const PlayerStats: React.FC<PlayerStatsProps> = ({
   naPlayers,
   euPlayers,
-  overallRatings,
-  naRatings,
-  euRatings,
   setViewingPlayer,
-  naStateRatings,
-  euStateRatings,
-  naMostPlayersState,
-  euMostPlayersState,
-  naMostPlayersStateFullName,
-  euMostPlayersStateFullName,
 }) => {
   if (!naPlayers || !euPlayers) {
     return <></>;
   }
+
+  const calculateRatings = (players: Player[]) => {
+    const ratedPlayers = players.filter(
+      (player) => player.rating && Number(player.rating) > 0
+    );
+
+    const totalRating = ratedPlayers.reduce(
+      (sum, player) => sum + Number(player.rating),
+      0
+    );
+
+    const averageRating =
+      ratedPlayers.length > 0
+        ? (totalRating / ratedPlayers.length).toFixed(2)
+        : "0.00";
+
+    const bestPlayer = ratedPlayers.reduce((best, player) => {
+      return Number(player.rating) > Number(best.rating) ? player : best;
+    }, ratedPlayers[0]);
+
+    const worstPlayer = ratedPlayers.reduce((worst, player) => {
+      return Number(player.rating) < Number(worst.rating) ? player : worst;
+    }, ratedPlayers[0]);
+
+    return { averageRating, bestPlayer, worstPlayer };
+  };
+
+  const naRatings = calculateRatings(naPlayers);
+  const euRatings = calculateRatings(euPlayers);
+  const overallRatings = calculateRatings([...naPlayers, ...euPlayers]);
+
+  const calculateStateRatings = (players: Player[]) => {
+    const stateRatings: { [state: string]: { total: number; count: number } } =
+      {};
+
+    players.forEach((player) => {
+      if (player.rating && Number(player.rating) > 0) {
+        if (!stateRatings[player.state]) {
+          stateRatings[player.state] = { total: 0, count: 0 };
+        }
+        stateRatings[player.state].total += Number(player.rating);
+        stateRatings[player.state].count += 1;
+      }
+    });
+
+    let highestAvgState = "";
+    let lowestAvgState = "";
+    let highestAvg = 0;
+    let lowestAvg = Infinity;
+
+    Object.keys(stateRatings).forEach((state) => {
+      const avg = stateRatings[state].total / stateRatings[state].count;
+      if (avg > highestAvg) {
+        highestAvg = avg;
+        highestAvgState = state;
+      }
+      if (avg < lowestAvg) {
+        lowestAvg = avg;
+        lowestAvgState = state;
+      }
+    });
+
+    return { highestAvgState, highestAvg, lowestAvgState, lowestAvg };
+  };
+
+  const naStateRatings = calculateStateRatings(naPlayers);
+  const euStateRatings = calculateStateRatings(euPlayers);
+  // const overallStateRatings = calculateStateRatings([
+  //   ...naPlayers,
+  //   ...euPlayers,
+  // ]);
+
+  const calculateMostPlayersState = (players: Player[]) => {
+    const stateCounts: { [state: string]: number } = {};
+
+    players.forEach((player) => {
+      if (player.state) {
+        if (!stateCounts[player.state]) {
+          stateCounts[player.state] = 0;
+        }
+        stateCounts[player.state] += 1;
+      }
+    });
+
+    let mostPlayersState = "";
+    let maxCount = 0;
+
+    Object.keys(stateCounts).forEach((state) => {
+      if (stateCounts[state] > maxCount) {
+        maxCount = stateCounts[state];
+        mostPlayersState = state;
+      }
+    });
+
+    return { mostPlayersState, maxCount };
+  };
+
+  const naMostPlayersState = calculateMostPlayersState(naPlayers);
+  const euMostPlayersState = calculateMostPlayersState(euPlayers);
+  const naMostPlayersStateFullName = getFullName(
+    naMostPlayersState.mostPlayersState,
+    "NA"
+  );
+  const euMostPlayersStateFullName = getFullName(
+    euMostPlayersState.mostPlayersState,
+    "EU"
+  );
 
   return (
     <div className="w-full md:w-1/2 md:mt-0 mt-4">
