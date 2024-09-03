@@ -56,7 +56,7 @@ import Alberta from "../../../../regionImages/Alberta.png";
 import BritishColumbia from "../../../../regionImages/British_Columbia.png";
 import Manitoba from "../../../../regionImages/Manitoba.png";
 import NewBrunswick from "../../../../regionImages/New_Brunswick.png";
-import NewfoundlandAndLabrador from "../../../../regionImages/Newfoundland_And_Labrador.png";
+import NewfoundlandAndLabrador from "../../../../regionImages/Newfoundland_and_Labrador.png";
 import Newfoundland from "../../../../regionImages/Newfoundland.png";
 import NovaScotia from "../../../../regionImages/Nova_Scotia.png";
 import Nunavut from "../../../../regionImages/Nunavut.png";
