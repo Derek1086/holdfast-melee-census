@@ -1,4 +1,5 @@
 import Typography from "@mui/material/Typography";
+import LocationIcon from "./LocationIcon";
 
 export const NAREGIONS = [
   ["Alabama", "AL"],
@@ -182,16 +183,19 @@ const LocationRenderer: React.FC<LocationRendererProps> = ({
   };
 
   return (
-    <Typography
-      variant="h6"
-      noWrap
-      component="div"
-      sx={{ textAlign: "center", marginBottom: "15px" }}
-    >
-      {location === ""
-        ? "Choose Location"
-        : `${location} - ${convertRegion(location, "TO_NAME")}`}
-    </Typography>
+    <div className="flex gap-2 justify-center items-center p-2">
+      {location !== "" && <LocationIcon region={region} location={location} />}
+      <Typography
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ textAlign: "center" }}
+      >
+        {location === ""
+          ? "Choose Location"
+          : `${location} - ${convertRegion(location, "TO_NAME")}`}
+      </Typography>
+    </div>
   );
 };
 

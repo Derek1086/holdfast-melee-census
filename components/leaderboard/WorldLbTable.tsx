@@ -12,11 +12,14 @@ import {
   NAREGIONS,
   EUREGIONS,
 } from "../home/details/location/LocationRenderer";
+import LocationIcon from "../home/details/location/LocationIcon";
 
 type LBWorld = {
   name: string;
   count: number;
   averageImpact: number;
+  region: string;
+  abb: string;
 };
 
 interface WorldLbTableProps {
@@ -46,8 +49,14 @@ const WorldLbTable: React.FC<WorldLbTableProps> = ({ combinedPlayers }) => {
 
     const sortedStates = Object.keys(stateStats)
       .map((state) => {
-        const name =
-          ALLREGIONS.find((region) => region[1] === state)?.[0] || state;
+        const abb = state;
+        const foundRegion = ALLREGIONS.find((region) => region[1] === state);
+        const name = foundRegion?.[0] || state;
+        const region = foundRegion
+          ? NAREGIONS.includes(foundRegion)
+            ? "NA"
+            : "EU"
+          : "NA";
         const stats = stateStats[state];
         const averageImpact =
           stats.count > 0 ? stats.totalRating / stats.count : 0;
@@ -55,12 +64,20 @@ const WorldLbTable: React.FC<WorldLbTableProps> = ({ combinedPlayers }) => {
           name,
           count: stats.count,
           averageImpact,
+          region,
+          abb,
         };
       })
       .filter((state) => state.averageImpact > 0)
-      .sort((a, b) => b.averageImpact - a.averageImpact);
+      .sort((a, b) => {
+        if (a.region !== b.region) {
+          return a.region.localeCompare(b.region);
+        }
+        return b.averageImpact - a.averageImpact;
+      });
 
     setSortedStates(sortedStates);
+    console.log(sortedStates);
   }, [combinedPlayers]);
 
   return (
@@ -132,7 +149,16 @@ const WorldLbTable: React.FC<WorldLbTableProps> = ({ combinedPlayers }) => {
             {sortedStates.map((state, index) => (
               <TableRow key={state.name}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{state.name}</TableCell>
+                <TableCell
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <LocationIcon region={state.region} location={state.abb} />
+                  {state.name}
+                </TableCell>
                 <TableCell>{state.averageImpact.toFixed(2)}</TableCell>
                 <TableCell>{state.count}</TableCell>
               </TableRow>
