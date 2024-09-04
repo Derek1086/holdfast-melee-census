@@ -9,6 +9,8 @@ import Head from "next/head";
 import PlayerLbTable from "../../components/leaderboard/PlayerLbTable";
 import RegimentLbTable from "../../components/leaderboard/RegimentLbTable";
 import WorldLbTable from "../../components/leaderboard/WorldLbTable";
+import { useRouter } from "next/router";
+import HomeIcon from "@mui/icons-material/Home";
 
 interface LeaderboardProps {
   players: RegionData[];
@@ -28,6 +30,8 @@ export type LBPlayer = {
 const Leaderboards: React.FC<LeaderboardProps> = ({ players }) => {
   const [view, setView] = useState<string>("Players");
   const [combinedPlayers, setCombinedPlayers] = useState<LBPlayer[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     const naRegion = players.find((regionData) => regionData.Region === "NA");
@@ -51,13 +55,22 @@ const Leaderboards: React.FC<LeaderboardProps> = ({ players }) => {
       </Head>
       <div style={{ color: "white", padding: "20px" }}>
         {/* Button Navigation */}
-        <div className="w-full flex gap-2 mb-4">
+        <div className="w-full md:flex block gap-2 mb-4">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => router.push("/")}
+            className="md:w-[120px] w-full md:0 mb-2"
+            tabIndex={-1}
+            startIcon={<HomeIcon />}
+          >
+            Home
+          </Button>
           <Button
             variant="contained"
             color="secondary"
             startIcon={<PeopleAltIcon />}
-            className="w-1/3"
-            fullWidth
+            className="md:w-1/3 w-full md:0 mb-2"
             onClick={() => setView("Players")}
           >
             Players
@@ -66,7 +79,7 @@ const Leaderboards: React.FC<LeaderboardProps> = ({ players }) => {
             variant="contained"
             color="secondary"
             startIcon={<FlagIcon />}
-            className="w-1/3"
+            className="md:w-1/3 w-full md:0 mb-2"
             fullWidth
             onClick={() => setView("Regiments")}
           >
@@ -76,7 +89,7 @@ const Leaderboards: React.FC<LeaderboardProps> = ({ players }) => {
             variant="contained"
             color="secondary"
             startIcon={<MapIcon />}
-            className="w-1/3"
+            className="md:w-1/3 w-full md:0 mb-2"
             fullWidth
             onClick={() => setView("World")}
           >
