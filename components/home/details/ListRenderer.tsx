@@ -152,7 +152,7 @@ const ListRenderer: React.FC<ListRendererProps> = ({
       <Card
         style={{
           width: "100%",
-          height: "75vh",
+          height: "72vh",
           padding: "15px",
           marginTop: "18px",
         }}

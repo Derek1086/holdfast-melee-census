@@ -28,7 +28,7 @@ const RegimentList: React.FC<RegimentListProps> = ({
   }
 
   return (
-    <div style={{ height: "55vh" }}>
+    <div style={{ height: "52vh" }}>
       <List
         sx={{
           width: "100%",

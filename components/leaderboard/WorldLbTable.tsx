@@ -93,7 +93,7 @@ const WorldLbTable: React.FC<WorldLbTableProps> = ({ combinedPlayers }) => {
       </Typography>
       <TableContainer
         component={Paper}
-        style={{ maxHeight: "72vh", overflowY: "auto", marginBottom: "20px" }}
+        style={{ maxHeight: "70vh", overflowY: "auto", marginBottom: "20px" }}
       >
         <Table sx={{ minWidth: 650 }}>
           <TableHead>

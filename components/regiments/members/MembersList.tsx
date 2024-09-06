@@ -92,7 +92,7 @@ const MembersList: React.FC<MembersListProps> = ({
         region={region}
         ranking={ranking}
       />
-      <div style={{ height: "55vh" }}>
+      <div style={{ height: "52vh" }}>
         <List
           sx={{
             width: "100%",

@@ -286,7 +286,7 @@ const Home: React.FC<HomeProps> = ({ players }) => {
               sx={{
                 marginTop: "15px",
                 width: "100%",
-                height: "75vh",
+                height: "72vh",
               }}
             >
               {region === "NA" ? (
